@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة القياسات وأجهزة القياس | م. طارق زياد أحمد حمد</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand h1 {
+            font-size: 1.6rem;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand p {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .author-badge {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid var(--accent);
+            color: #fde68a;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: white;
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 88px;
+            z-index: 90;
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tab-btn:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1300px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Controls & Filters Bar */
+        .controls-card {
+            background: var(--card-bg);
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #475569;
+        }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: #f8fafc;
+        }
+
+        .btn {
+            padding: 0.65rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { background: #d97706; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .q-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            align-items: center;
+        }
+
+        .badge {
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .badge-lec { background: #e0e7ff; color: #3730a3; }
+        .badge-easy { background: #d1fae5; color: #065f46; }
+        .badge-medium { background: #fef3c7; color: #92400e; }
+        .badge-hard { background: #fee2e2; color: #991b1b; }
+        .badge-exam {
+            background: linear-gradient(135deg, #fef08a, #f59e0b);
+            color: #78350f;
+            border: 1px solid #d97706;
+        }
+
+        /* Lightbulb Hint Button */
+        .bulb-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bulb-btn.lit {
+            background: #fef08a;
+            border-color: #eab308;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.8);
+            transform: scale(1.08);
+        }
+
+        .hint-box {
+            display: none;
+            background: #fffbeb;
+            border-right: 4px solid var(--accent);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+
+        .hint-box.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .q-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1.1rem;
+        }
+
+        .options-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.65rem;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: right;
+            padding: 0.85rem 1rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 0.96rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary-light);
+            background: #f8fafc;
+        }
+
+        .option-btn.correct {
+            background: #ecfdf5 !important;
+            border-color: var(--success) !important;
+            color: #065f46 !important;
+            font-weight: 600;
+        }
+
+        .option-btn.wrong {
+            background: #fef2f2 !important;
+            border-color: var(--danger) !important;
+            color: #991b1b !important;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.9rem 1.1rem;
+            border-radius: 8px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            font-size: 0.92rem;
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Print Layout */
+        .print-header {
+            border: 2px solid #000;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .print-header-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media print {
+            header, .nav-tabs, .no-print, .bulb-btn, .hint-box, .explanation-box {
+                display: none !important;
+            }
+            body { background: white; }
+            .question-card {
+                box-shadow: none;
+                border: 1px solid #000;
+                page-break-inside: avoid;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            background: var(--secondary);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="brand">
+            <h1>📐 منصة القياسات وأجهزة القياس التفاعلية</h1>
+            <p>بنك الأسئلة الأكاديمي الشامل، مسائل التوزيع الطبيعي، ونماذج المذاكرات الرسمية</p>
+        </div>
+        <div class="author-badge">
+            <span>👨‍💻 إعداد المهندس: طارق زياد أحمد حمد</span>
+        </div>
+    </div>
+</header>
+
+<nav class="nav-tabs">
+    <div class="nav-container">
+        <button class="tab-btn active" onclick="switchTab('quiz-sec', this)">🎯 1. الاختبار التفاعلي</button>
+        <button class="tab-btn" onclick="switchTab('builder-sec', this)">⚙️ 2. مولّد النماذج الامتحانية</button>
+        <button class="tab-btn" onclick="switchTab('table-sec', this)">📊 3. الجدول الشامل</button>
+        <button class="tab-btn" onclick="switchTab('print-sec', this)">🖨️ 4. نسخة الاختبار للطباعة</button>
+        <button class="tab-btn" onclick="switchTab('key-sec', this)">🔑 5. مفتاح الإجابات والتعليل</button>
+        <button class="tab-btn" onclick="switchTab('history-sec', this)">🏆 6. سجل نتائج الامتحانات</button>
+    </div>
+</nav>
+
+<main>
+    <!-- 1. قسم الاختبار التفاعلي -->
+    <section id="quiz-sec" class="section active">
+        <div class="controls-card">
+            <div class="filters-grid">
+                <div class="form-group">
+                    <label>تصفية حسب ملف المحاضرة:</label>
+                    <select id="filter-lecture" onchange="applyFilters()">
+                        <option value="all">جميع المحاضرات والملفات</option>
+                        <option value="lec12">المحاضرة 1 و 2 (مقدمة وأساسيات القياس)</option>
+                        <option value="lec34">المحاضرة 3 و 4 (الأخطاء العشوائية والإحصاء)</option>
+                        <option value="lec56">المحاضرة 5 و 6 (الأخطاء المنهجية والضجيج)</option>
+                        <option value="probs">ملف المسائل المحلولة المؤتمتة (ملحق ف2 + مسائل عامة)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>تصفية حسب مستوى الصعوبة:</label>
+                    <select id="filter-diff" onchange="applyFilters()">
+                        <option value="all">جميع المستويات (سهل، متوسط، صعب)</option>
+                        <option value="سهل">سهل</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="صعب">صعب</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>تصفية أسئلة المذاكرة الرسمية:</label>
+                    <select id="filter-source" onchange="applyFilters()">
+                        <option value="all">كل الأسئلة (شامل أسئلة المذاكرة)</option>
+                        <option value="exam">⭐ أسئلة نماذج المذاكرة فقط</option>
+                        <option value="regular">أسئلة المحاضرات المستقلة فقط</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display:flex; gap:0.5rem;">
+                    <button class="btn btn-accent" style="width:100%" onclick="shuffleAllOptions()">🔀 تغيير مواقع الخيارات</button>
+                    <button class="btn btn-outline" onclick="resetCurrentQuiz()">🔄 تصفير</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item" id="stat-count">عدد الأسئلة المعروضة: 0</div>
+            <div class="stat-item" id="stat-score">النتيجة الحالية: 0 / 0 (0%)</div>
+            <button class="btn btn-success" onclick="saveExamResult('الاختبار التفاعلي العام')">💾 حفظ النتيجة في السجل</button>
+        </div>
+
+        <div id="quiz-container"></div>
+    </section>
+
+    <!-- 2. قسم مولد النماذج الامتحانية -->
+    <section id="builder-sec" class="section">
+        <div class="controls-card">
+            <h3 style="margin-bottom: 1rem; color: var(--primary);">🛠️ إعداد نموذج امتحاني مخصص (بإشراف م. طارق زياد أحمد حمد)</h3>
+            <div class="filters-grid">
+                <div class="form-group">
+                    <label>عدد الأسئلة المطلوبة:</label>
+                    <input type="number" id="custom-count" value="15" min="1" max="250">
+                </div>
+                <div class="form-group">
+                    <label>درجة الصعوبة:</label>
+                    <select id="custom-diff">
+                        <option value="all">مختلط (جميع المستويات)</option>
+                        <option value="سهل">سهل فقط</option>
+                        <option value="متوسط">متوسط فقط</option>
+                        <option value="صعب">صعب فقط</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>تضمين أسئلة المذاكرة:</label>
+                    <select id="custom-exam-only">
+                        <option value="all">شامل (محاضرات + مذاكرات)</option>
+                        <option value="exam">أسئلة المذاكرات الرسمية فقط ⭐</option>
+                    </select>
+                </div>
+            </div>
+            <div style="margin-top: 1rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
+                <label><input type="checkbox" class="custom-lec-cb" value="lec12" checked> المحاضرة 1 و 2</label>
+                <label><input type="checkbox" class="custom-lec-cb" value="lec34" checked> المحاضرة 3 و 4</label>
+                <label><input type="checkbox" class="custom-lec-cb" value="lec56" checked> المحاضرة 5 و 6</label>
+                <label><input type="checkbox" class="custom-lec-cb" value="probs" checked> ملف المسائل المؤتمتة</label>
+            </div>
+            <div style="margin-top: 1.2rem; display:flex; gap:0.8rem;">
+                <button class="btn btn-primary" onclick="generateCustomExam()">🚀 توليد النموذج الامتحاني الآن</button>
+                <button class="btn btn-success" onclick="saveCustomExamResult()">💾 إنهاء وحفظ نتيجة النموذج المخصص</button>
+            </div>
+        </div>
+
+        <div class="stats-bar" id="custom-stats-bar" style="display:none;">
+            <div class="stat-item" id="custom-stat-info">النموذج المخصص جاهز</div>
+            <div class="stat-item" id="custom-stat-score">النتيجة: 0 / 0</div>
+        </div>
+        <div id="custom-exam-container"></div>
+    </section>
+
+    <!-- 3. قسم الجدول الشامل -->
+    <section id="table-sec" class="section">
+        <div class="controls-card">
+            <div class="filters-grid">
+                <div class="form-group">
+                    <label>🔍 محرك البحث السريع في جميع الأسئلة والتعليلات:</label>
+                    <input type="text" id="table-search" placeholder="ابحث عن مصطلح، قانون، رقم، أو كلمة مفتاحية..." oninput="renderMasterTable()">
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>المحاضرة / التصنيف</th>
+                        <th>الصعوبة</th>
+                        <th>نص السؤال</th>
+                        <th>الإجابة الصحيحة الكاملة</th>
+                        <th>التلميح (💡)</th>
+                    </tr>
+                </thead>
+                <tbody id="master-table-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 4. قسم نسخة الاختبار للطباعة -->
+    <section id="print-sec" class="section">
+        <div class="controls-card no-print" style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <strong>🖨️ ورقة الامتحان الجاهزة للطباعة (بدون إجابات أو تلميحات)</strong>
+                <p style="font-size:0.85rem; color:#64748b;">تعرض هذه النسخة الأسئلة المفلترة حالياً في القسم الأول أو النموذج المولد.</p>
+            </div>
+            <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة ورقة الامتحان الآن</button>
+        </div>
+
+        <div class="print-header">
+            <div style="text-align:center; margin-bottom:0.8rem; border-bottom:1px solid #ccc; padding-bottom:0.5rem;">
+                <h2>جامعة دمشق - كلية الهندسة الميكانيكية والكهربائية</h2>
+                <h3>امتحان مقرر القياسات وأجهزة القياس | إعداد المهندس: طارق زياد أحمد حمد</h3>
+            </div>
+            <div class="print-header-grid">
+                <div>اسم الطالب: .........................................</div>
+                <div>الرقم الجامعي: ...................................</div>
+                <div>الدرجة المستحقة: ............ / ............</div>
+            </div>
+        </div>
+
+        <div id="print-questions-container"></div>
+    </section>
+
+    <!-- 5. قسم مفتاح الإجابات والتعليل -->
+    <section id="key-sec" class="section">
+        <div class="controls-card">
+            <h3 style="color:var(--primary); margin-bottom:0.5rem;">🔑 جدول المفاتيح السريع</h3>
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;">يتحدث هذا المفتاح تلقائياً عند قيامك بتغيير مواقع الخيارات (أ، ب، ج، د).</p>
+            <div id="quick-key-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap:0.5rem;"></div>
+        </div>
+
+        <div class="controls-card">
+            <h3 style="color:var(--primary); margin-bottom:1rem;">📖 الإجابات التفصيلية مع السبب والتعليل الهندسي</h3>
+            <div id="detailed-keys-container"></div>
+        </div>
+    </section>
+
+    <!-- 6. قسم سجل نتائج الامتحانات -->
+    <section id="history-sec" class="section">
+        <div class="controls-card" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3>🏆 سجل نتائج الامتحانات السابقة</h3>
+            <button class="btn btn-danger" onclick="clearExamHistory()">🗑️ مسح السجل بالكامل</button>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>تاريخ ووقت الاختبار</th>
+                        <th>نوع النموذج / التصفية</th>
+                        <th>النتيجة</th>
+                        <th>النسبة المئوية</th>
+                        <th>التقدير</th>
+                    </tr>
+                </thead>
+                <tbody id="history-table-body"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>جميع الحقوق محفوظة © 2026 | منصة مقرر القياسات وأجهزة القياس - إعداد وتطوير المهندس: <strong>طارق زياد أحمد حمد</strong></p>
+</footer>
+
+<script>
+const arabicLetters = ['أ', 'ب', 'ج', 'د'];
+
+// بنك الأسئلة الشامل - الدفعة التأسيسية الأولى (70 سؤالاً كاملاً متوازناً أكاديمياً)
+// ملاحظة: يمكن إضافة الدفعات اللاحقة مباشرة إلى هذه المصفوفة
+const rawQuestions = [
+    // ==================== المحاضرة 1 و 2 (35 سؤالاً مستقلاً وشاملاً للمذاكرات) ====================
+    {
+        id: 1, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج A - س1",
+        q: "من المواصفات الأساسية التي تميز عملية القياس المباشر عن القياس غير المباشر:",
+        options: [
+            "لا يتم فيها التعويض في علاقة رياضية لحساب المقدار المقاس",
+            "تتطلب إجراء أكثر من عملية قياس واحدة للوصول إلى النتيجة",
+            "يتم فيها التعويض الإلزامي في علاقة رياضية لاستنتاج القيمة",
+            "تتضمن تراكم عدة أخطاء ناتجة عن مراحل الاستشعار المتعددة"
+        ],
+        ans: 0,
+        hint: "تذكر مقارنة الجدول بين القياس المباشر وغير المباشر من حيث العمليات الحسابية.",
+        exp: "في القياس المباشر تتم مقارنة البعد مباشرة بجهاز القياس في خطوة واحدة دون الحاجة للتعويض في علاقة رياضية."
+    },
+    {
+        id: 2, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج A - س2",
+        q: "تتميز أجهزة القياس الفعالة (Active Instruments) مقارنة بالأجهزة غير الفعالة بأنها:",
+        options: [
+            "تحتاج إلى مصدر طاقة خارجي تقوم الكمية المقاسة بتعديل قيمته",
+            "لا تحتاج إلى أي مصدر طاقة خارجي لإنتاج إشارة الخرج النهائية",
+            "تمتلك بنية تصميمية بسيطة جداً وتستمد طاقتها من المتغير فقط",
+            "تكون أرخص ثمناً في التصنيع ولا تسمح بالتحكم بدرجة التمييز"
+        ],
+        ans: 0,
+        hint: "اربط كلمة (فعالة) بوجود بطارية أو منبع تغذية خارجي كمساعد.",
+        exp: "الأجهزة الفعالة تحتاج لمصدر طاقة خارجي وتقوم الكمية المقاسة بتعديل قيمة هذا المصدر، مما يمنحها دقة تمييز أعلى."
+    },
+    {
+        id: 3, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج A - س3",
+        q: "أي من المكونات التالية لا يُصنف ضمن العناصر الأساسية المكونة لنظام القياس العام؟",
+        options: [
+            "وحدة التحكم الآلي المستقلة عن استشعار ومعالجة الإشارة",
+            "الحساس الأولي الذي يستجيب للمتغير الفيزيائي المراد قياسه",
+            "عنصر معالجة الإشارة لتحسين جودة الخرج وترشيح الضجيج",
+            "وحدة إظهار الإشارة أو تسجيلها للمراقب عند نقطة النهاية"
+        ],
+        ans: 0,
+        hint: "عناصر نظام القياس تبدأ بالحساس وتنتهي بالإظهار، أما التحكم فهو تطبيق خارجي.",
+        exp: "عناصر نظام القياس هي: الحساس، عنصر تحويل المتغير، معالجة الإشارة، نقل الإشارة، وإظهارها. وحدة التحكم ليست عنصراً داخلياً في أداة القياس."
+    },
+    {
+        id: 4, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: true, examTag: "نموذج B - س1",
+        q: "تُستخدم أجهزة القياس ذات إشارة الناتج (Instruments with a signal output) بشكل رئيسي كـ:",
+        options: [
+            "جزء متكامل من أنظمة التحكم الآلي ذات التغذية الراجعة",
+            "أجهزة دلالة مرئية أو صوتية فقط تحتاج لتدخل القارئ البشري",
+            "أجهزة قياس صفرية تعتمد على الموازنة اليدوية للأوزان العيارية",
+            "أدوات قياس ميكانيكية غير فعالة تعرض القراءة عبر مؤشر وتدريج"
+        ],
+        ans: 0,
+        hint: "أين نحتاج إشارة كهربائية أو هوائية بدلاً من شاشة عرض يقرؤها الإنسان؟",
+        exp: "الأجهزة ذات إشارة الناتج تعطي إشارة (جهد، تيار، ضغط) تتناسب مع الكمية المقاسة وتغذى مباشرة إلى أنظمة التحكم الآلي."
+    },
+    {
+        id: 5, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج B - س2",
+        q: "يمكن تسمية متغير المعلومات الذي يتولد من العملية الفيزيائية ويدخل لنظام القياس بـ:",
+        options: [
+            "المتغير المقاس الذي يمثل دخل نظام القياس بقيمته الحقيقية",
+            "المراقب البشري الذي يقوم بقراءة القيمة النهائية على الشاشة",
+            "جهاز القياس المرجعي المسؤول عن معايرة الواحدات الدولية",
+            "العملية الفيزيائية المستقلة التي لا ترتبط بنظام الاستشعار"
+        ],
+        ans: 0,
+        hint: "راجع المخطط الصندوقي لربط العملية بالمراقب عبر نظام القياس.",
+        exp: "يُشار إلى متغير المعلومات الناتج عن العملية باسم (المتغير المقاس)، ويمثل دخله القيمة الحقيقية وخوجه القيمة المقاسة."
+    },
+    {
+        id: 6, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج B - س3",
+        q: "إن أحد الأسباب الهندسية الرئيسية لاستخدام الألياف الضوئية في أنظمة القياس الحديثة لنقل الإشارة هو:",
+        options: [
+            "انخفاض مستوى الضياع في الإشارة وعدم تأثرها بالحقول الكهرومغناطيسية",
+            "تأثرها المباشر بالحقول الكهربائية والمغناطيسية المحيطة بمسار الكبل",
+            "ارتفاع نسبة الفقد الحراري فيها مقارنة بالكابلات النحاسية متعددة النوى",
+            "حاجتها إلى تضخيم مستمر نتيجة التشوه الكبير للإشارة الضوئية المنقولة"
+        ],
+        ans: 0,
+        hint: "قارن بين الكبل النحاسي التقليدي والليف الضوئي من حيث الضياعات والتداخل المغناطيسي.",
+        exp: "تتميز الألياف الضوئية بانخفاض الضياع أثناء النقل لمسافات بعيدة ومناعتها التامة ضد الحقول الكهربائية والمغناطيسية."
+    },
+    {
+        id: 7, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: true, examTag: "نموذج C - س1",
+        q: "تُصنف وظيفة (تقديم معلومات تساعد المشغل البشري في اتخاذ أفعال وقرارات معينة) ضمن:",
+        options: [
+            "وظائف المراقبة للعمليات مثل مراقبة الحرارة والضغط وضبط الصمامات",
+            "تنظيم عمليات تبادل المعلومات التجارية المعتمدة على الكتلة والطول",
+            "أنظمة التحكم الآلي المغلقة التي تعمل تلقائياً دون أي تدخل بشري",
+            "عمليات الاشتقاق الرياضي للواحدات الفرعية من النظام المعياري الدولي"
+        ],
+        ans: 0,
+        hint: "انتبه لعبارة (تساعد الإنسان في اتخاذ أفعال معينة) ضمن مجالات تطبيقات القياس الثلاثة.",
+        exp: "وظائف المراقبة تقدم معلومات تمكن الإنسان (المشغل) من اتخاذ قرارات صحيحة كضبط المسخنات أو الصمامات."
+    },
+    {
+        id: 8, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج C - س2",
+        q: "إن النظام المعياري الدولي للقياس (The International Standards System) هو النظام الذي:",
+        options: [
+            "يصف الواحدات المتفق والمتعارف عليها دولياً بالإجماع العالمي",
+            "يصف الواحدات المتعارف عليها وطنياً داخل حدود جغرافية لدولة معينة",
+            "يعتمد حصرياً على القدم والباوند والثانية كواحدات أساسية في الحساب",
+            "تكون كل دولة منفردة مسؤولة عن تحديد أبعاده بمعزل عن الدول الأخرى"
+        ],
+        ans: 0,
+        hint: "ميز بين النظام المعياري الدولي (SI) والنظام المعياري الأساسي الوطني.",
+        exp: "النظام المعياري الدولي هو النظام المتعارف عليه بالإجماع الدولي ويصف الواحدات الأساسية السبع والمشتقة منها."
+    },
+    {
+        id: 9, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج C&D - س3",
+        q: "تتميز أجهزة القياس التمثيلية (Analogue Instruments) بطبيعة إشارة خرجها التي تكون:",
+        options: [
+            "إشارة خرج تتغير بشكل مستمر ومتصل مع الزمن تبعاً لتغير الكمية المقاسة",
+            "إشارة خرج تتغير بخطوات منفصلة ومحددة القيم لا تقبل التدرج المستمر",
+            "إشارة خرج بصيغة رقمية ثنائية جاهزة للربط المباشر مع الحواسيب الصغيرة",
+            "إشارة خرج متقطعة مع الزمن لا تأخذ إلا عدداً محدوداً من القيم الثابتة"
+        ],
+        ans: 0,
+        hint: "فكر في حركة مؤشر مقياس الضغط الانحرافي مقابل عداد دورات المحرك.",
+        exp: "الأجهزة التمثيلية تعطي خرجاً يتغير بشكل مستمر، ويمكن أن يأخذ عدداً لانهائياً من القيم ضمن مجال القياس المصمم له."
+    },
+    {
+        id: 10, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: true, examTag: "نموذج D - س1",
+        q: "من تطبيقات أنظمة القياس (تنظيم عمليات تبادل المعلومات)، حيث يتم في هذا المجال:",
+        options: [
+            "استخدام الأجهزة التي تقيس كميات فيزيائية كالطول والكتلة بالواحدات المعيارية",
+            "توليد إشارة خطأ تلقائية عبر مقارن لضبط درجة حرارة الغرفة دون تدخل بشري",
+            "تحويل الإشارات التمثيلية إلى رقمية لتسريع عمل المعالجات الصغرية في المصانع",
+            "إدخال مدخلات بيئية معاكسة لإلغاء تأثير درجة الحرارة على ملفات الأجهزة"
+        ],
+        ans: 0,
+        hint: "تذكر الموازين وأدوات قياس الأطوال المستخدمة في التبادل التجاري والمعلوماتي.",
+        exp: "في تنظيم عمليات تبادل المعلومات، تُستخدم أجهزة تقيس كميات فيزيائية مثل الطول والحجم والكتلة والتعبير عنها بالواحدات المعيارية."
+    },
+    {
+        id: 11, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: true, examTag: "نموذج D - س2",
+        q: "يُصنف جهاز قياس مؤشر مستوى خزان البنزين في المركبات (المزود بفواشة ومقياس جهد انزلاقي) بأنه:",
+        options: [
+            "جهاز قياس فعال لأن الفواشة تعدل قيمة جهد مستمد من منبع طاقة خارجي",
+            "جهاز قياس غير فعال يستمد كامل طاقة إشارة الخرج من حركة السائل فقط",
+            "جهاز قياس صفري يعتمد على إضافة أوزان معيارية لموازنة ضغط الوقود",
+            "جهاز قياس رقمي يعطي نبضات متقطعة عبر قاطعة ميكانيكية وعداد إلكتروني"
+        ],
+        ans: 0,
+        hint: "مقياس الجهد الانزلاقي في خزان الوقود موصول ببطارية السيارة؛ فما نوعه؟",
+        exp: "مقياس مستوى البنزين جهاز فعال (Active) لأن حركة الفواشة تعدل فقط ذراع مقياس الجهد، بينما تأتي الطاقة من منبع جهد خارجي."
+    },
+    {
+        id: 12, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "يُعرف علم القياس (Metrology) من الناحية الهندسية والأكاديمية الدقيقة بأنه:",
+        options: [
+            "علم إجراء عملية القياس مع تحديد نسبة الخطأ المترتبة على هذه العملية",
+            "علم تصنيع الحساسات الإلكترونية بمعزل عن دراسة أخطاء التطبيق والبيئة",
+            "علم الحصول على تطابق تام بنسبة مئة بالمئة بين القيمة المقاسة والحقيقية",
+            "علم تحويل الواحدات الوطنية إلى واحدات بريطانية دون استخدام أجهزة استشعار"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة الثانية في الفصل الأول حول تعريف علم Metrology.",
+        exp: "علم القياس (Metrology) هو علم إجراء عملية القياس مع تحديد نسبة الخطأ المترتبة عليها، وله عنصران: عملية القياس وجهاز القياس."
+    },
+    {
+        id: 13, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "تتألف نتيجة أي عملية قياس هندسية مكتملة من ثلاثة أركان أساسية لا تتجزأ، وهي:",
+        options: [
+            "القيمة العددية للخاصية، وواحدة قياس مناسبة، ونسبة خطأ معينة مرافقة",
+            "اسم الشركة المصنعة، وتاريخ المعايرة، ونوع مصدر التغذية الكهربائي",
+            "القيمة التقريبية، ومعامل التحويل البريطاني، وسرعة استجابة المؤشر",
+            "المتغير الفيزيائي، واسم المراقب البشري، وطول كبل نقل الإشارة"
+        ],
+        ans: 0,
+        hint: "عندما تكتب قراءة أي مقدار فيزيائي في المختبر، ما هي الأجزاء الثلاثة التي تدونها؟",
+        exp: "تحتوي نتيجة عملية القياس دائماً على: القيمة العددية، واحدة قياس دولية مناسبة، ونسبة خطأ معينة تعود للجهاز أو المستخدم."
+    },
+    {
+        id: 14, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "في المخطط العام لنظام القياس، يُمثل كل من (دخل النظام) و(خرج النظام) على الترتيب:",
+        options: [
+            "القيمة الحقيقية للمتغير المقاس في الدخل، والقيمة المقاسة للمتغير في الخرج",
+            "القيمة المقاسة للمتغير في الدخل، والقيمة الحقيقية للمتغير في الخرج",
+            "إشارة الخطأ النسبي في الدخل، وإشارة الضجيج الكهربائي في الخرج",
+            "قرار المراقب البشري في الدخل، وحركة العملية الفيزيائية في الخرج"
+        ],
+        ans: 0,
+        hint: "ما الذي يدخل إلى الحساس من العملية، وما الذي يخرج منه إلى عين المراقب؟",
+        exp: "دخل نظام القياس هو القيمة الحقيقية للمتغير الفيزيائي من العملية، وخرجه هو القيمة المقاسة التي تصل للمراقب."
+    },
+    {
+        id: 15, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "عند المقارنة بين الخطأ المطلق (Δ) والخطأ النسبي (δ) في تقييم أداء أنظمة القياس، نجد أن:",
+        options: [
+            "الخطأ المطلق له نفس واحدة المقدار المقاس، بينما الخطأ النسبي أكثر دلالة على الدقة",
+            "الخطأ المطلق ليس له واحدة قياس، بينما الخطأ النسبي يقاس بواحدة المتغير المقاس",
+            "القياس يكون أكثر دقة كلما كانت قيمة الخطأ النسبي كبيرة جداً ومقاربة للواحد",
+            "الخطأ المطلق يساوي حاصل قسمة القيمة المقاسة على القيمة الحقيقية للقياس"
+        ],
+        ans: 0,
+        hint: "أيهما يحمل واحدة فيزيائية وأيهما يعبر عن النسبة المئوية للدقة؟",
+        exp: "الخطأ المطلق دائماً موجب وواحدته نفس واحدة المقدار المقاس، بينما الخطأ النسبي لا واحدة له وهو أكثر دلالة على دقة القياس."
+    },
+    {
+        id: 16, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "عند قياس حجم كرة متجانسة نصف قطرها (R) عبر قياس القطر بالقدمة ذات الورنية ثم التعويض في قانون الحجم، فإن هذه الطريقة تُعد:",
+        options: [
+            "قياساً غير مباشر لأنها تتضمن تعويضاً في علاقة رياضية وينتج عنها تراكم للخطأ",
+            "قياساً مباشراً لأن القدمة ذات الورنية تلامس سطح الكرة المعدنية بشكل مباشر",
+            "قياساً صفرياً يعتمد على موازنة كتلة الكرة مع حجم السائل المزاح في المخبار",
+            "قياساً خالياً من الأخطاء لأن العلاقة الهندسية لحجم الكرة ثابتة رياضياً"
+        ],
+        ans: 0,
+        hint: "هل قرأت الحجم مباشرة من القدمة أم قست القطر ثم حسبت الحجم بمعادلة؟",
+        exp: "بما أنه تم قياس القطر أولاً ثم التعويض في معادلة رياضية لحساب الحجم، فهي عملية قياس غير مباشر."
+    },
+    {
+        id: 17, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "في النظام المعياري الدولي للواحدات (SI)، تُعطى واحدات قياس كل من (كمية المادة، الشدة الضوئية، والزاوية المجسمة) على الترتيب بالرموز:",
+        options: [
+            "المول (mol)، والشمعة (cd)، والستراديان (sr)",
+            "الكيلوغرام (kg)، والكلفن (K)، والراديان (rd)",
+            "الأمبير (A)، والواط (W)، والنيوتن (N)",
+            "المول (mol)، واللومن (lm)، والراديان (rd)"
+        ],
+        ans: 0,
+        hint: "راجع جدول الواحدات الأساسية في الجملة الدولية في الشريحة 13.",
+        exp: "في الجملة الدولية: كمية المادة تقاس بالمول (mol)، الشدة الضوئية بالشمعة (cd)، والزاوية المجسمة بالستراديان (sr)."
+    },
+    {
+        id: 18, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "صعب", isExam: false, examTag: "",
+        q: "يُعبر عن الواحدة المشتقة لـ (الاستطاعة - الواط W) بدلالة الواحدات الأساسية في النظام الدولي بالعلاقة البعدية:",
+        options: [
+            "1 W = 1 J·s⁻¹ = 1 kg·m²·s⁻³",
+            "1 W = 1 N·m = 1 kg·m²·s⁻²",
+            "1 W = 1 N·m⁻² = 1 kg·m⁻¹·s⁻²",
+            "1 W = 1 kg·m·s⁻²"
+        ],
+        ans: 0,
+        hint: "الاستطاعة هي الطاقة (جول) مقسومة على الزمن (ثانية)، والجول هو نيوتن في متر.",
+        exp: "بما أن الجول (1 J = 1 kg·m²·s⁻²)، فإن الواط (1 W = 1 J·s⁻¹ = 1 kg·m²·s⁻³)."
+    },
+    {
+        id: 19, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "صعب", isExam: false, examTag: "",
+        q: "يُعبر عن الواحدة المشتقة لـ (الضغط - الباسكال Pa) بدلالة الواحدات الأساسية في النظام الدولي بالعلاقة:",
+        options: [
+            "1 Pa = 1 N·m⁻² = 1 kg·m⁻¹·s⁻²",
+            "1 Pa = 1 N·m = 1 kg·m²·s⁻²",
+            "1 Pa = 1 J·s⁻¹ = 1 kg·m²·s⁻³",
+            "1 Pa = 1 kg·m·s⁻²"
+        ],
+        ans: 0,
+        hint: "الضغط هو القوة (نيوتن = kg·m·s⁻²) مقسومة على المساحة (m²).",
+        exp: "الضغط يساوي القوة على المساحة، وبالتعويض عن النيوتن نجد أن: 1 Pa = 1 N·m⁻² = 1 kg·m⁻¹·s⁻²."
+    },
+    {
+        id: 20, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "عند التحويل بين النظام المعياري البريطاني والنظام المعياري الدولي، فإن قيمتي (1 قدم ft) و(1 باوند lb) تعادلان بدقة:",
+        options: [
+            "القدم يعادل (0.3048 m)، والباوند يعادل (0.4536 kg)",
+            "القدم يعادل (0.4536 m)، والباوند يعادل (0.3048 kg)",
+            "القدم يعادل (0.2540 m)، والباوند يعادل (0.5000 kg)",
+            "القدم يعادل (0.3333 m)، والباوند يعادل (0.4082 kg)"
+        ],
+        ans: 0,
+        hint: "راجع جدول المقارنة بين النظامين الدولي والبريطاني في الشريحة 15.",
+        exp: "في جدول مقارنة الواحدات الأساسية: (1 ft = 0.3048 m) للطول، و(1 lb = 0.4536 kg) للكتلة."
+    },
+    {
+        id: 21, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "في أنظمة القياس المتقدمة، يُطلق مصطلح (المبدل - Transducer) على المزيج الناتج عن دمج:",
+        options: [
+            "الحساس الأولي مع عنصر تحويل المتغير في وحدة واحدة",
+            "عنصر معالجة الإشارة مع كبل الألياف الضوئية لنقل البيانات",
+            "وحدة إظهار الإشارة الرقمية مع المقارن في حلقة التحكم",
+            "المضخم الإلكتروني مع المرشح السعوي لحذف الضجيج"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 20 حول عنصر تحويل المتغير وما ينتج عند دمجه مع الحساس الأولي.",
+        exp: "عندما يتم الجمع بين الحساس الأولي وعنصر تحويل المتغير (مثل مقياس الإجهاد مع دارة الجسر) يُعرف المزيج باسم المبدل."
+    },
+    {
+        id: 22, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "عندما يتم تضمين (عنصر معالجة الإشارة) داخل (المبدل) في جهاز قياس متكامل، فإن هذا المكون يُسمى عندئذٍ بـ:",
+        options: [
+            "مرسل القياس (Transmitter)",
+            "الحساس الأولي المجرد (Primary Sensor)",
+            "المقارن التفاضلي (Comparator)",
+            "المحول التمثيلي الرقمي (A/D Converter)"
+        ],
+        ans: 0,
+        hint: "راجع نهاية الشريحة 21 حول تضمين معالجة الإشارة في المبدل.",
+        exp: "في بعض الأجهزة يتم تضمين معالجة الإشارة في المبدل، ويُسمى الجهاز عندها بمرسل القياس (Transmitter)."
+    },
+    {
+        id: 23, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "عند استخدام مقياس الإجهاد (Strain Gauge) الذي يقيس الإزاحة على شكل تغير في المقاومة، تُستخدم (دارة الجسر) كـ:",
+        options: [
+            "عنصر تحويل متغير يقوم بتحويل تغير المقاومة إلى تغير في الجهد يسهل قياسه",
+            "حساس أولي ميكانيكي يتمدد مباشرة بفعل القوة المطبقة على الجسم الصلب",
+            "عنصر نقل إشارة يقوم بإرسال القراءة إلى غرفة المراقبة البعيدة دون ضياع",
+            "وحدة إظهار وتسجيل نهائية تعرض قيمة الإزاحة المقاسة للمراقب البشري"
+        ],
+        ans: 0,
+        hint: "من الصعب قياس تغير المقاومة الطفيف مباشرة، فما دور دارة الجسر هنا؟",
+        exp: "دارة الجسر هي مثال نموذجي لعنصر تحويل المتغير، حيث تحول التغير في مقاومة مقياس الإجهاد إلى تغير في الجهد الكهربائي."
+    },
+    {
+        id: 24, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "يتم الاستغناء تماماً عن (عنصر إظهار أو تسجيل الإشارة) وحذفه من نظام القياس في الحالة التي:",
+        options: [
+            "تُغذى فيها إشارة القياس المرسلة مباشرة كدخل تلقائي لنظام تحكم آلي ذي تغذية راجعة",
+            "يكون فيها المراقب البشري متواجداً في غرفة تحكم بعيدة عن موقع الحساس الأولي",
+            "يُستخدم فيها جهاز القياس لأغراض المعايرة المخبرية الدقيقة بواسطة الأجهزة الصفرية",
+            "تكون فيها الإشارة الخارجة من الحساس الأولي ضعيفة وتحتاج إلى مضخم إلكتروني"
+        ],
+        ans: 0,
+        hint: "متى لا نحتاج لشاشة يقرؤها الإنسان في نهاية سلسلة القياس؟",
+        exp: "يُحذف عنصر الإظهار تماماً عندما يُستخدم القياس كجزء من مخطط التحكم الآلي، حيث تُغذى الإشارة مباشرة إلى المقارن ومتحكم النظام."
+    },
+    {
+        id: 25, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "في نظام التحكم البسيط ذي الحلقة المغلقة لضبط درجة حرارة الغرفة، يقوم (المقارن) بطرح القيمة المقاسة (Ta) من القيمة المرجعية (Td) لتوليد:",
+        options: [
+            "إشارة خطأ (Td - Ta) تتحكم بعمل المسخن لتعديل حرارة الغرفة",
+            "إشارة ضجيج تسلسلي تعمل على إيقاف أداة قياس درجة الحرارة",
+            "قراءة رقمية نهائية تُعرض على شاشة المراقب دون التأثير على المسخن",
+            "تغذية كهربائية خارجية لتحويل الحساس غير الفعال إلى حساس فعال"
+        ],
+        ans: 0,
+        hint: "راجع مخطط نظام التحكم البسيط ذي الحلقة المغلقة في الشريحة 28.",
+        exp: "المقارن يقارن القيمة المرجعية المطلوبة (Td) بالقيمة الفعلية المقاسة بأداة قياس الحرارة (Ta) ويولد إشارة الخطأ (Td - Ta) لتشغيل المسخن."
+    },
+    {
+        id: 26, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "يُعتبر مقياس الضغط ذو المكبس والنابض والمؤشر (بدون أي تغذية كهربائية) مثالاً كلاسيكياً على:",
+        options: [
+            "الأجهزة غير الفعالة (Passive) وأجهزة الانحراف التمثيلية في آنٍ واحد",
+            "الأجهزة الفعالة (Active) التي تعدل قيمة منبع الطاقة الخارجي",
+            "الأجهزة الصفرية (Null-type) المفضلة في مهام المعايرة الدقيقة",
+            "الأجهزة الرقمية الذكية المزودة بمعالج صغري لتعويض حرارة المائع"
+        ],
+        ans: 0,
+        hint: "من أين يحصل المؤشر على طاقة حركته؟ وكيف يعرض القيمة؟",
+        exp: "هو جهاز غير فعال لأن كامل طاقة تحريك المؤشر تأتي من ضغط المائع المقاس، وهو جهاز انحراف تمثيلي لأن المؤشر ينحرف بشكل مستمر على قوس مدرج."
+    },
+    {
+        id: 27, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "عند المفاضلة الهندسية بين اختيار جهاز قياس فعال أو جهاز قياس غير فعال لتطبيق معين، فإن القرار يعتمد على:",
+        options: [
+            "موازنة حذرة بين متطلبات درجة تمييز القياس العالية (للفعالة) مقابل التكلفة المنخفضة (لغير الفعالة)",
+            "كون الأجهزة غير الفعالة دائماً أعلى دقة وأغلى ثمناً من الأجهزة الفعالة المعقدة",
+            "استحالة استخدام الأجهزة الفعالة في القياسات المستمرة بسبب نفاد منبع الطاقة",
+            "تفضيل الأجهزة غير الفعالة دائماً عندما نحتاج للتحكم الدقيق بدرجة تمييز القياس"
+        ],
+        ans: 0,
+        hint: "راجع شريحة المقارنة بين الأجهزة الفعالة وغير الفعالة من حيث الدقة والتكلفة.",
+        exp: "الأجهزة الفعالة تتيح تحكماً أكبر بدرجة تمييز القياس، بينما غير الفعالة أبسط بنية وأرخص تصنيعاً؛ فالاختيار موازنة بين درجة التمييز والتكلفة."
+    },
+    {
+        id: 28, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "يعمل مقياس الوزن الساكن (Deadweight Gauge) المستخدم لقياس ضغط الموائع وفق مبدأ:",
+        options: [
+            "الأجهزة الصفرية (Null-type) حيث تضاف أوزان فوق المكبس حتى يعود للموضع الصفري المسند",
+            "أجهزة الانحراف (Deflection-type) حيث يُقرأ الضغط من مقدار انضغاط نابض حلزوني",
+            "الأجهزة الفعالة التي تحول ضغط المائع إلى تغير في سعة مكثف كهربائي موصول ببطارية",
+            "أجهزة العد الرقمي التي تحصي عدد فقاعات الغاز المارة عبر صمام خانق في الثانية"
+        ],
+        ans: 0,
+        hint: "كيف نعرف قيمة الضغط في مقياس الوزن الساكن؟ راجع الشريحة 35.",
+        exp: "مقياس الوزن الساكن هو جهاز صفري، تضاف فيه أوزان فوق المكبس لموازنة ضغط المائع حتى يصل المكبس لمستوى مسند (الموضع الصفري)."
+    },
+    {
+        id: 29, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "عند المقارنة بين الأجهزة الصفرية وأجهزة الانحراف من حيث الدقة وسهولة الاستخدام، نجد أن:",
+        options: [
+            "الأجهزة الصفرية أكثر دقة وتُفضل في مهام المعايرة، بينما أجهزة الانحراف أكثر ملاءمة للاستخدام العملي",
+            "أجهزة الانحراف أكثر دقة وتُفضل في المعايرة، بينما الأجهزة الصفرية أسرع قراءة في المصانع",
+            "الأجهزة الصفرية مناسبة جداً للربط المباشر مع أنظمة التحكم الآلي السريعة دون تدخل بشري",
+            "كلا النوعين يمتلكان نفس درجة الدقة والملاءمة ولا يوجد أي فرق جوهري في تطبيقاتهما"
+        ],
+        ans: 0,
+        hint: "لماذا نستخدم مقياس الوزن الساكن في المختبرات للمعايرة ولا نضعه على لوحة قيادة السيارة؟",
+        exp: "الأجهزة الصفرية تتميز بدقة فائقة لذا تُفضل للمعايرة، لكن أجهزة الانحراف أكثر ملاءمة وسرعة للاستخدام اليومي المباشر."
+    },
+    {
+        id: 30, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "في جهاز عداد دوران المحرك الميكانيكي المزود بحدبة وقاطعة وعداد إلكتروني، يُصنف هذا النظام كجهاز رقمي لأنه:",
+        options: [
+            "يمتلك خرجاً يتغير بخطوات منفصلة ويعد فقط دورات كاملة دون تمييز أجزاء الدورة",
+            "يعطي إشارة جهد مستمرة تتناسب طردياً مع السرعة الزاوية اللحظية لعمود المحرك",
+            "يعتمد على قدرة عين المراقب في تقدير المسافة بين تدريجات القوس الدائري",
+            "يحتاج إلى محول تمثيلي رقمي (A/D) لكي يتمكن الحاسوب من قراءة عدد الدورات"
+        ],
+        ans: 0,
+        hint: "راجع شرح عداد دوران المحرك ذي الحدبة في الشريحة 38.",
+        exp: "في كل دورة تفتح الحدبة وتغلق القاطعة، فيعد العداد خطوات منفصلة (دورات كاملة فقط) ولا يميز أي حركة أقل من دورة كاملة."
+    },
+    {
+        id: 31, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "متوسط", isExam: false, examTag: "",
+        q: "إن ربط أجهزة القياس التمثيلية إلى الحواسيب الصغيرة في أنظمة التحكم يتطلب استخدام محول تمثيلي رقمي (A/D)، ومن أبرز مساوئ ذلك:",
+        options: [
+            "إضافة تكلفة كبيرة على النظام وإضاعة وقت في التحويل مما يقلل سرعة ودقة التحكم بالعملية",
+            "تدمير الإشارة الأصلية بالكامل وعدم إمكانية قراءتها من قبل المعالج الصغري الرقمي",
+            "زيادة سرعة تشغيل حاسوب التحكم بشكل مفرط يؤدي إلى عدم استقرار الحلقة المغلقة",
+            "تحول الجهاز التمثيلي تلقائياً إلى جهاز صفري يحتاج إلى موازنة يدوية بالأوزان"
+        ],
+        ans: 0,
+        hint: "راجع المساوئ الثلاثة لاستخدام المحول (A/D) في الشريحة 40.",
+        exp: "المساوئ هي: 1) يضيف تكلفة كبيرة، 2) يضيع وقتاً محدوداً في عملية التحويل، 3) يقلل سرعة تشغيل حاسوب التحكم مما يضعف دقة التحكم."
+    },
+    {
+        id: 32, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "تشترك جميع الأجهزة الصفرية وأغلب الأجهزة غير الفعالة في تصنيفها ضمن فئة:",
+        options: [
+            "أجهزة الدلالة (Indicating Instruments) التي تعطي دلالة مرئية أو صوتية فقط",
+            "الأجهزة ذات إشارة الناتج التي تغذي أنظمة التحكم الآلي بإشارات كهربائية",
+            "الأجهزة الذكية التي تحتوي على معالجات صغرية لتصحيح الأخطاء البيئية",
+            "مرسلات القياس (Transmitters) التي تدمج المضخمات مع كابلات الألياف الضوئية"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 41 حول تعريف وأمثلة أجهزة الدلالة.",
+        exp: "أجهزة الدلالة هي التي تعطي فقط دلالة صوتية أو مرئية لقيمة الكمية المقاسة، ومن أمثلتها جميع الأجهزة الصفرية وأغلب الأجهزة غير الفعالة."
+    },
+    {
+        id: 33, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "يتمثل العيب الجوهري الكبير لأجهزة الدلالة (وبالأخص ذات الإظهار التمثيلي) في:",
+        options: [
+            "الحاجة إلى التدخل البشري لقراءة وتسجيل القياس مما يعرضها لأخطاء القراءة البشرية",
+            "عدم قدرتها على العمل بدون التوصيل الدائم بشبكة الحواسيب المركزية في المصنع",
+            "إنتاجها لإشارات ضوئية وهوائية عالية الاستطاعة تسبب خطراً على سلامة المشغل",
+            "احتوائها الإلزامي على محولات تمثيلية رقمية ترفع من تكلفتها التصنيعية"
+        ],
+        ans: 0,
+        hint: "لماذا يخطئ الإنسان عند النظر إلى مؤشر يتحرك أمام تدريجات دقيقة؟",
+        exp: "العيب الكبير لأجهزة الدلالة هو الحاجة للتدخل البشري لقراءة وتسجيل القياس، وتكون القراءة التمثيلية معرضة للخطأ البشري أكثر من الإظهار الرقمي."
+    },
+    {
+        id: 34, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "في الأجهزة التمثيلية المزودة بمؤشر وقوس مدرج، يعتمد تمييز العين البشرية للمواضع المختلفة للمؤشر على:",
+        options: [
+            "حجم القوس المدرجة ومقدار صغر تقسيماتها (التدريجات)",
+            "نوع المعدن المصنوع منه نابض الإرجاع الداخلي للجهاز",
+            "سرعة المعالج الصغري المدمج في شاشة العرض الإلكترونية",
+            "طول كبل التوصيل الممتد بين الحساس الأولي والمؤشر"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 37 حول محدودية تمييز العين لمواضع المؤشر.",
+        exp: "على الرغم من أن الخرج التمثيلي يأخذ عدداً لانهائياً من القيم، إلا أن تمييز العين البشرية محدود ويعتمد على حجم القوس المدرجة وصغر تقسيماتها."
+    },
+    {
+        id: 35, lec: "lec12", lecName: "المحاضرة 1 و 2", diff: "سهل", isExam: false, examTag: "",
+        q: "يرتكز التقسيم الحديث لأجهزة القياس إلى (أجهزة ذكية Smart Instruments) و(أجهزة غير ذكية Non-smart) على:",
+        options: [
+            "احتواء الجهاز على المعالجات الصغرية (Microprocessors) من عدمه",
+            "استخدام الجهاز لإظهار رقمي بشاشة إلكترونية بدلاً من المؤشر الدوار",
+            "قدرة الجهاز على العمل بدون مصدر طاقة خارجي بالاعتماد على المتغير المقاس",
+            "ارتباط الجهاز بكبل ألياف ضوئية بدلاً من الكبل النحاسي متعدد النوى"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 45 في نهاية الفصل الأول.",
+        exp: "أدى ظهور المعالجات الصغرية إلى تقسيم الأجهزة إلى أجهزة ذكية (تتضمن معالجات صغرية) وأجهزة غير ذكية (لا تتضمنها)."
+    },
+
+    // ==================== ملف المسائل المحلولة المؤتمتة (20 مسألة مؤتمتة بالكامل) ====================
+    {
+        id: 36, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: true, examTag: "نموذج A - مسألة 12",
+        q: "مسألة: إذا حُسبت كثافة مادة من قياس كتلتها وحجمها حيث كانت أخطاء القياس القصوى المحتملة فيهما هي (±2%) و(±3%) على التوالي، فإن قيمة أقصى خطأ محتمل (e) في حساب الكثافة إحصائياً تساوي:",
+        options: [
+            "±3.6% (حيث e = √(0.02² + 0.03²) = ±0.036)",
+            "±5.0% (حيث e = 0.02 + 0.03 = ±0.050)",
+            "±0.36% (حيث e = 0.02 × 0.03 × 6 = ±0.0036)",
+            "±36.0% (حيث e = √(2² + 3²) × 10 = ±0.360)"
+        ],
+        ans: 0,
+        hint: "الكثافة تساوي الكتلة تقسيم الحجم؛ استخدم قانون الجذر التربيعي لمجموع مربعي الخطأين النسبيين.",
+        exp: "في حالة القسمة لقياسات غير مترابطة: e = √(a² + b²) = √(0.02² + 0.03²) = √(0.0004 + 0.0009) = √0.0013 = 0.036 أي ±3.6%."
+    },
+    {
+        id: 37, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: true, examTag: "نموذج A - مسألة 13-14",
+        q: "مسألة: إذا كان لدينا منحني غاوس المعياري N(0, 1)، فكيف يمكن حساب احتمال المنطقة المظللة المحصورة بين القيمتين (Z = -0.64) و(Z = 0.43)؟ وما قيمتها العددية؟",
+        options: [
+            "تُحسب بالعلاقة P(-0.64 < Z < 0.43) = P(Z < 0.43) - P(Z < -0.64) وتساوي 0.4053",
+            "تُحسب بالعلاقة P(-0.64 > Z > 0.43) = P(Z < 0.43) + P(Z < -0.64) وتساوي 0.9275",
+            "تُحسب بالعلاقة P(-0.64 < Z < 0.43) = 1 - P(Z < 0.43) وتساوي 0.3336",
+            "تُحسب بالعلاقة P(Z < 0.43) × P(Z < -0.64) وتساوي 0.1740"
+        ],
+        ans: 0,
+        hint: "مساحة الحزمة الوسطى تساوي المساحة على يسار الحد الأيمن مطروحاً منها المساحة على يسار الحد الأيسر.",
+        exp: "من ملحق المسائل (مثال 6) ونموذج المذاكرة A: الخياران الصحيحان في المذاكرة هما P(-0.64 < Z < 0.43) و P(Z < 0.43) - P(Z < -0.64) = 0.6664 - (1 - 0.7389) = 0.4053."
+    },
+    {
+        id: 38, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: true, examTag: "نموذج B - مسألة 12",
+        q: "مسألة: إذا حُسبت قيمة القدرة الكهربائية في دارة عبر قياس الجهد والتيار اللذين فيهما أخطاء حد أقصى (±1%) و(±2%) على التوالي، فإن أقصى خطأ محتمل (e) في قيمة القدرة المحسوبة يساوي:",
+        options: [
+            "±2.2% (حيث e = √(0.01² + 0.02²) = ±0.022)",
+            "±3.0% (حيث e = 0.01 + 0.02 = ±0.030)",
+            "±0.22% (حيث e = 0.01 × 0.02 × 11 = ±0.0022)",
+            "±22.0% (حيث e = √(0.1² + 0.2²) = ±0.220)"
+        ],
+        ans: 0,
+        hint: "القدرة P = V × I هي عملية ضرب؛ طبق علاقة الجذر التربيعي لمجموع مربعي النسبتين.",
+        exp: "في حالة ضرب قياسين مستقلين: e = √(a² + b²) = √(0.01² + 0.02²) = √0.0005 = ±0.022 أي ±2.2%."
+    },
+    {
+        id: 39, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: true, examTag: "نموذج B - مسألة 13-14",
+        q: "مسألة: إذا كان Z ~ N(0, 1) منحني غاوس المعياري، فكيف يُعبر عن احتمال المنطقة المظللة الواقعة إلى أقصى يسار القيمة (-0.76)؟ وما قيمتها العددية؟",
+        options: [
+            "يُعبر عنها بـ P(Z < -0.76) وتكافئ بالتناظر P(Z > 0.76) = 1 - P(Z < 0.76) = 0.2236",
+            "يُعبر عنها بـ P(Z > -0.76) وتكافئ بالتناظر P(Z < 0.76) = 0.7764",
+            "يُعبر عنها بـ P(Z < 0.67) وتكافئ 1 + P(Z < 0.76) = 1.7764",
+            "يُعبر عنها بـ P(Z > 0.67) وتكافئ نصف مساحة المنحني الكلية = 0.5000"
+        ],
+        ans: 0,
+        hint: "راجع المثال 5 في ملحق المسائل المحلولة والسؤال 13-14 في نموذج B ونموذج د. ليلى.",
+        exp: "المنطقة على يسار (-0.76) هي P(Z < -0.76)، وبسبب تناظر منحني غاوس تساوي P(Z > 0.76) = 1 - 0.7764 = 0.2236."
+    },
+    {
+        id: 40, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "صعب", isExam: true, examTag: "نموذج C - مسألة 11-12",
+        q: "مسألة: عند حساب معدل تدفق سائل بقياس فرق الضغط على جانبي لوحة تدفق، كانت القراءتان (10 bar) و(9.5 bar) والخطأ في كل مقياس (±0.1%)، فتكون قيمتا الخطأ المطلق (e) والنسبي (f) للفرق:",
+        options: [
+            "قيمة e = 0.0138 bar، وقيمة f = 0.0276 (أي 2.76%)",
+            "قيمة e = 0.1380 bar، وقيمة f = 0.2760 (أي 27.6%)",
+            "قيمة e = 0.00138 bar، وقيمة f = 1.2760 (أي 127.6%)",
+            "قيمة e = 1.0138 bar، وقيمة f = 1.0276 (أي 102.7%)"
+        ],
+        ans: 0,
+        hint: "احسب الخطأ المطلق لكل ضغط (0.001×10 و 0.001×9.5) ثم اجمعهما تحت الجذر، واقسم على الفرق (0.5).",
+        exp: "في حالة الطرح: e = √((0.001×10)² + (0.001×9.5)²) = 0.0138 bar. والخطأ الكسري f = e / (10 - 9.5) = 0.0138 / 0.5 = 0.0276."
+    },
+    {
+        id: 41, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "سهل", isExam: true, examTag: "نموذج C - مسألة 13-14",
+        q: "مسألة: إذا كان Z ~ N(0, 1) منحني غاوس المعياري، وكانت المنطقة المظللة تمتد من (-0.5) باتجاه اليمين حتى اللانهاية، فما العبارتان المكافئتان لحسابها؟ وما قيمتها؟",
+        options: [
+            "العبارتان هما P(Z > -0.5) و P(Z < 0.5)، وقيمتها من الجدول 0.6915",
+            "العبارتان هما P(Z < -0.5) و P(Z > 0.5)، وقيمتها من الجدول 0.3085",
+            "العبارتان هما P(Z > -0.5) و 1 - P(Z < 0.5)، وقيمتها من الجدول 0.5000",
+            "العبارتان هما P(Z < -0.5) و 1 + P(Z < 0.5)، وقيمتها من الجدول 1.6915"
+        ],
+        ans: 0,
+        hint: "راجع المثال 4 في ملحق المسائل المحلولة والسؤال الأخير في نموذج C.",
+        exp: "المنطقة على يمين (-0.5) هي P(Z > -0.5)، وبالتناظر حول الصفر تساوي تماماً المنطقة على يسار (+0.5) أي P(Z < 0.5) = 0.6915."
+    },
+    {
+        id: 42, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: true, examTag: "نموذج D - مسألة 11-12",
+        q: "مسألة: عند ربط مقاومتين على التسلسل قيمتاهما الاسميتان (220 Ω) و(330 Ω) وتسامح كل منهما (±2%)، فإن قيمة الخطأ المطلق المحسوب (e) والتعبير عن المقاومة الكلية (S) هما:",
+        options: [
+            "الخطأ e = 7.93 Ω، والمقاومة الكلية S = 550 ± 7.93 Ω (أو ±1.44%)",
+            "الخطأ e = 5.93 Ω، والمقاومة الكلية S = 550 ± 5.93 Ω (أو ±1.08%)",
+            "الخطأ e = 9.93 Ω، والمقاومة الكلية S = 330 ± 9.93 Ω (أو ±3.01%)",
+            "الخطأ e = 3.93 Ω، والمقاومة الكلية S = 220 ± 3.93 Ω (أو ±1.78%)"
+        ],
+        ans: 0,
+        hint: "احسب 2% من 220 (أي 4.4) و2% من 330 (أي 6.6)، ثم احسب الجذر التربيعي لمجموع مربعيهما.",
+        exp: "e = √((0.02×220)² + (0.02×330)²) = √(4.4² + 6.6²) = √62.92 = 7.93 Ω، والمجموع الاسمي S = 220 + 330 = 550 Ω."
+    },
+    {
+        id: 43, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "سهل", isExam: true, examTag: "نموذج D - مسألة 13-14",
+        q: "مسألة: إذا كان Z ~ N(0, 1) منحني غاوس المعياري، وكانت المنطقة المظللة تقع إلى يمين القيمة (Z = 0.92)، فما العبارتان الصحيحتان لحسابها؟ وما الناتج؟",
+        options: [
+            "العبارتان هما P(Z > 0.92) و 1 - P(Z < 0.92)، والناتج يساوي 0.1788",
+            "العبارتان هما P(Z < 0.92) و 1 - P(Z > 0.92)، والناتج يساوي 0.8212",
+            "العبارتان هما P(Z > 0.92) و P(Z < 0.92)، والناتج يساوي 0.5000",
+            "العبارتان هما 1 + P(Z < 0.92) و P(Z < -0.92)، والناتج يساوي 1.8212"
+        ],
+        ans: 0,
+        hint: "راجع المثال 3 في ملحق المسائل المحلولة والسؤال الأخير في نموذج D.",
+        exp: "المساحة على يمين 0.92 هي P(Z > 0.92)، وبما أن المساحة الكلية تساوي 1 فإنها تساوي 1 - P(Z < 0.92) = 1 - 0.8212 = 0.1788."
+    },
+    {
+        id: 44, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "ملحق المسائل - ص15",
+        q: "مسألة: إذا كان المتغير العشوائي يتبع التوزيع الطبيعي X ~ N(3, 4) حيث المتوسط (μ = 3) والتباين (σ² = 4)، فإن قيمة الاحتمال P(X < 6.2) بعد التقييس تساوي:",
+        options: [
+            "P(Z < 1.6) = 0.9452 (حيث الانحراف المعياري σ = 2، و Z = (6.2 - 3)/2)",
+            "P(Z < 0.8) = 0.7881 (على اعتبار القسمة المباشرة على التباين 4 بدلاً من σ)",
+            "P(Z < 3.2) = 0.9993 (بطرح المتوسط فقط دون القسمة على الانحراف المعياري)",
+            "P(Z > 1.6) = 0.0548 (بأخذ المتمم الحسابي لقيمة الجدول المعياري)"
+        ],
+        ans: 0,
+        hint: "انتبه! الرمز N(3, 4) يعني أن μ = 3 والتباين σ² = 4، أي أن الانحراف المعياري σ = √4 = 2.",
+        exp: "نحول إلى التوزيع المعياري بطرح المتوسط 3 والقسمة على الانحراف المعياري 2: Z = (6.2 - 3) / 2 = 1.6، ومن الجدول P(Z < 1.6) = 0.9452."
+    },
+    {
+        id: 45, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "ملحق المسائل - مثال 7",
+        q: "مسألة: إذا كان توزيع وزن الولادة للأطفال يتبع توزيعاً طبيعياً بمتوسط (μ = 3500 g) وانحراف معياري (σ = 500 g)، فإن احتمال ولادة طفل وزنه أقل من (3100 g) يساوي:",
+        options: [
+            "0.2119 (حيث Z = (3100 - 3500)/500 = -0.8، ومنه 1 - 0.7881)",
+            "0.7881 (وهي قيمة P(Z < 0.8) المستخرجة مباشرة من الجدول المعياري)",
+            "0.4238 (بضرب قيمة الاحتمال 0.2119 في العدد 2 للتناظر الجانبي)",
+            "0.5762 (بطرح ضعف الاحتمال الطرفي من المساحة الكلية للمنحني)"
+        ],
+        ans: 0,
+        hint: "احسب قيمة Z أولاً: (3100 - 3500) / 500 = -0.8، ثم استخدم علاقة القيم السالبة F(-z) = 1 - F(z).",
+        exp: "بتطبيق التقييس: Z = (3100 - 3500)/500 = -0.8. إذن P(X < 3100) = P(Z < -0.8) = 1 - P(Z < 0.8) = 1 - 0.7881 = 0.2119."
+    },
+    {
+        id: 46, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "صعب", isExam: false, examTag: "مسألة الترانزستورات (أ)",
+        q: "مسألة: تحتوي شريحة دارة متكاملة على (10⁵) ترانزستور بمتوسط ربح تيار (μ = 20) وانحراف معياري (σ = 2). إن عدد الترانزستورات التي يقع ربحها بين (19.8 و 20.2) علماً أن F(0.1)=0.5398 هو:",
+        options: [
+            "7960 ترانزستوراً (لأن نسبة المجال هي 1 - 2×(1 - 0.5398) = 0.0796)",
+            "53980 ترانزستوراً (بضرب قيمة الجدول F(0.1) مباشرة في العدد الكلي 10⁵)",
+            "46020 ترانزستوراً (بضرب متمم الجدول 0.4602 في العدد الكلي للترانزستورات)",
+            "92040 ترانزستوراً (وهي عدد الترانزستورات الواقعة خارج المجال المطلوب)"
+        ],
+        ans: 0,
+        hint: "عند X=20.2 تكون Z=+0.1، وعند X=19.8 تكون Z=-0.1. احسب المساحة المحصورة بينهما واضربها في 100,000.",
+        exp: "P(-0.1 < Z < 0.1) = 1 - 2×(1 - 0.5398) = 1 - 0.9204 = 0.0796. عدد الترانزستورات = 0.0796 × 10⁵ = 7960 ترانزستوراً."
+    },
+    {
+        id: 47, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "مسألة الترانزستورات (ب)",
+        q: "مسألة: في شريحة الدارة المتكاملة السابقة ذات (10⁵) ترانزستور (μ = 20, σ = 2)، إن عدد الترانزستورات التي يكون ربح التيار لها أكبر من (17) علماً أن F(1.5)=0.9332 هو:",
+        options: [
+            "93320 ترانزستوراً (لأن Z = -1.5، و P(Z > -1.5) = P(Z < 1.5) = 0.9332)",
+            "6680 ترانزستوراً (لأن P(X > 17) = 1 - 0.9332 = 0.0668)",
+            "50000 ترانزستور (لأن القيمة 17 تقع عند منتصف المنحني المتناظر)",
+            "86640 ترانزستوراً (لأن المساحة المحصورة بين ±1.5σ تساوي 0.8664)"
+        ],
+        ans: 0,
+        hint: "احسب Z = (17 - 20) / 2 = -1.5. المطلوب P(Z > -1.5) والذي يساوي بالتناظر F(+1.5).",
+        exp: "عندما X = 17 فإن Z = (17 - 20)/2 = -1.5. إذن P(X > 17) = P(Z > -1.5) = P(Z < 1.5) = 0.9332، والعدد هو 93,320 ترانزستوراً."
+    },
+    {
+        id: 48, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "مسألة الكتلة المعيارية",
+        q: "مسألة: قِيست كتلة معيارية 30 مرة لإنشاء مجموعة مرجعية فكانت (σ = 0.43 kg) و(α = 0.08 kg). عند قياس كتلة مجهولة مرة واحدة بنفس الجهاز أعطى قراءة (105.6 kg)، فيُعبر عن الكتلة ضمن ثقة 95% بـ:",
+        options: [
+            "105.6 ± 0.9 kg (حيث الخطأ الأقصى = ±(1.96σ + α) = ±0.92 kg)",
+            "105.6 ± 0.5 kg (بجمع الانحراف المعياري σ مع الخطأ المعياري α مباشرة)",
+            "105.6 ± 0.8 kg (باستخدام 1.96σ فقط وإهمال خطأ المتوسط المرجعي α)",
+            "105.6 ± 1.3 kg (باستخدام حدود ثلاث سيجما 3σ بدلاً من حدود 95%)"
+        ],
+        ans: 0,
+        hint: "في قياس واحد، أقصى خطأ محتمل يُعطى بالعلاقة: Error = ±(1.96σ + α).",
+        exp: "بتطبيق القانون: Error = ±(1.96 × 0.43 + 0.08) = ±(0.8428 + 0.08) = ±0.9228 ≈ ±0.9 kg، فتكون الكتلة 105.6 ± 0.9 kg."
+    },
+    {
+        id: 49, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "مسألة المجموعة A",
+        q: "مسألة: لمجموعة القياس A المكونة من (n = 11) قياساً لطول قضيب فولاذي بمتوسط (409 mm)، إذا كان مجموع مربعات الانحرافات عن المتوسط يساوي (1370)، فإن قيمتي التباين (V) والانحراف المعياري (σ) هما:",
+        options: [
+            "التباين V = 137 mm²، والانحراف المعياري σ = 11.7 mm (بالقسمة على n - 1 = 10)",
+            "التباين V = 124.5 mm²، والانحراف المعياري σ = 11.16 mm (بالقسمة على n = 11)",
+            "التباين V = 1370 mm²، والانحراف المعياري σ = 37.01 mm (دون القسمة على عدد القياسات)",
+            "التباين V = 68.5 mm²، والانحراف المعياري σ = 8.27 mm (بالقسمة على ضعف العدد 20)"
+        ],
+        ans: 0,
+        hint: "لعينة محدودة لا نعرف متوسطها الحقيقي اللانهائي، نقسم مجموع مربعات الانحرافات على (n - 1).",
+        exp: "بما أن n = 11، فإن n - 1 = 10. التباين V = 1370 / 10 = 137، والانحراف المعياري σ = √137 = 11.7."
+    },
+    {
+        id: 50, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "مسألة المجموعة C",
+        q: "مسألة: لمجموعة البيانات C التي عدد قياساتها (n = 23) ومتوسطها (406.5 mm) وانحرافها المعياري (σ = 1.88 mm)، كيف يُعبر عن الطول المقاس ضمن حدود ثقة 95.4% (أي حدود ±2α)؟",
+        options: [
+            "406.5 ± 0.8 mm (لأن α = 1.88/√23 = 0.39، ومنه 2α = 0.78 ≈ 0.8)",
+            "406.5 ± 0.4 mm (وهو التعبير الموافق لحدود ثقة 68% أي ±1α فقط)",
+            "406.5 ± 3.8 mm (باستخدام 2σ مباشرة دون القسمة على الجذر التربيعي لـ n)",
+            "406.5 ± 1.9 mm (باستخدام قيمة الانحراف المعياري σ كخطأ معياري للمتوسط)"
+        ],
+        ans: 0,
+        hint: "احسب أولاً الخطأ المعياري للمتوسط α = σ / √n، ثم اضربه في 2 للحصول على حدود ثقة 95.4%.",
+        exp: "الخطأ المعياري للمتوسط α = 1.88 / √23 = 0.39 mm. ولحدود ثقة 95.4% نأخذ ±2α = ±0.78 ≈ ±0.8 mm."
+    },
+    {
+        id: 51, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "صعب", isExam: false, examTag: "مسألة أثر التحميل 1",
+        q: "مسألة: دارة مجزئ جهد منبعها (E = 30 V) ومقاومتاها على التسلسل (RA = 25 kΩ) و(RB = 5 kΩ). عند وصل فولتميتر مقاومته الداخلية (RV = 10 kΩ) على التفرع مع RB، فإن الجهد المقاس ونسبة الخطأ الناتجة عن التحميل هما:",
+        options: [
+            "الجهد المقاس 3.53 V بدلاً من 5 V، ونسبة خطأ التحميل تساوي 29.4%",
+            "الجهد المقاس 5.00 V تماماً، ونسبة خطأ التحميل تساوي 0.0%",
+            "الجهد المقاس 4.25 V بدلاً من 5 V، ونسبة خطأ التحميل تساوي 15.0%",
+            "الجهد المقاس 2.50 V بدلاً من 5 V، ونسبة خطأ التحميل تساوي 50.0%"
+        ],
+        ans: 0,
+        hint: "احسب المقاومة المكافئة Req = 5 // 10 = 3.33 kΩ، ثم طبق قانون مجزئ الجهد.",
+        exp: "بدون الفولتميتر الجهد 5V. مع الفولتميتر: Req = (5×10)/(5+10) = 3.33 kΩ. الجهد المقاس = 30 × (3.33 / 28.33) = 3.53 V. نسبة الخطأ = ((5 - 3.53)/5)×100% = 29.4%."
+    },
+    {
+        id: 52, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "صعب", isExam: false, examTag: "مسألة أثر التحميل 2",
+        q: "مسألة: استُخدم فولتميتر مقاومته الداخلية (RV = 150 kΩ) لقياس الجهد على مقاومة مجهولة (Rx) فقرأ (100 V)، وقرأ الأمبيرمتر تياراً قدره (5 mA). بإهمال مقاومة الأمبيرمتر، فإن المقاومة المقاسة (R) والفعلية (Rx) ونسبة الخطأ هي:",
+        options: [
+            "المقاسة R = 20 kΩ، والفعلية Rx = 23.05 kΩ، ونسبة الخطأ 13.23%",
+            "المقاسة R = 23.05 kΩ، والفعلية Rx = 20 kΩ، ونسبة الخطأ 15.25%",
+            "المقاسة R = 20 kΩ، والفعلية Rx = 17.65 kΩ، ونسبة الخطأ 11.75%",
+            "المقاسة R = 30 kΩ، والفعلية Rx = 35.50 kΩ، ونسبة الخطأ 18.30%"
+        ],
+        ans: 0,
+        hint: "المقاومة الظاهرية المقاسة R = V/I = 100V / 5mA = 20 kΩ، وهي تكافئ Rx على التفرع مع 150 kΩ.",
+        exp: "R = 100V / 5mA = 20 kΩ. المقاومة الفعلية Rx = (R × RV) / (RV - R) = (20 × 150) / 130 = 23.05 kΩ. نسبة الخطأ = ((23.05 - 20)/23.05)×100% = 13.23%."
+    },
+    {
+        id: 53, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "صعب", isExam: false, examTag: "مسألة الكثافة المتعددة",
+        q: "مسألة: كتلة متوازي مستطيلات أبعادها (a = 100mm ±1%, b = 200mm ±1%, c = 300mm ±1%) وكتلتها (m = 20kg ±0.5%). إن قيمة الكثافة وأقصى خطأ محتمل فيها بطريقة (الجمع الجبري المباشر) وبطريقة (التقدير الإحصائي الجذري) هما:",
+        options: [
+            "الحجم 0.006 m³، والخطأ بالجمع المباشر ±3.5%، وبالتقدير الإحصائي ±1.77%",
+            "الحجم 0.060 m³، والخطأ بالجمع المباشر ±2.5%، وبالتقدير الإحصائي ±1.41%",
+            "الحجم 0.006 m³، والخطأ بالجمع المباشر ±1.77%، وبالتقدير الإحصائي ±3.5%",
+            "الحجم 0.600 m³، والخطأ بالجمع المباشر ±4.0%، وبالتقدير الإحصائي ±2.00%"
+        ],
+        ans: 0,
+        hint: "راجع الحلين (1) و(2) في الشريحتين 52 و53 من المحاضرة (5+6).",
+        exp: "الحجم abc = 0.1×0.2×0.3 = 0.006 m³. بالجمع المباشر للأسوأ: 1%+1%+1%+0.5% = ±3.5%. إحصائياً: √(1² + 1² + 1² + 0.5²) = √3.25 ≈ ±1.77%."
+    },
+    {
+        id: 54, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "مسألة الجهود الكهروحرارية 1",
+        q: "مسألة: في نظام تبديل مزدوجات حرارية يستخدم ريليه ريد (Reed-relay) ذات معامل كهروحراري (40 μV/°C) مع النحاس، إذا نشأ فرق حرارة (2°C) فقط بين طرفي الريليه وكانت إشارة المزدوجة (400 μV)، فإن الجهد الكهروحراري المتولد ونسبته للإشارة هما:",
+        options: [
+            "يتولد جهد كهروحراري صافي قدره 80 μV، ويشكل خطأً كبيراً نسبته 20% من الإشارة",
+            "يتولد جهد كهروحراري صافي قدره 20 μV، ويشكل خطأً طفيفاً نسبته 5% من الإشارة",
+            "يتولد جهد كهروحراري صافي قدره 800 μV، ويشكل خطأً مضاعفاً نسبته 200% من الإشارة",
+            "يلغي الجهدان بعضهما تماماً ويكون الجهد الكهروحراري الصافي مساوياً للصفر"
+        ],
+        ans: 0,
+        hint: "اضرب المعامل (40 μV/°C) في فرق درجة الحرارة (2°C) وقارنه مع إشارة المزدوجة (400 μV).",
+        exp: "الجهد الكهروحراري المتولد = 40 μV/°C × 2°C = 80 μV، وهو كبير جداً مقارنة بخرج المزدوجة النموذجي (400 μV)."
+    },
+    {
+        id: 55, lec: "probs", lecName: "ملف المسائل المؤتمتة", diff: "متوسط", isExam: false, examTag: "مسألة الجهود الكهروحرارية 2",
+        q: "مسألة: لقياس تيار كهربائي، مُرر تيار معياري (20 A) في مقاومة دقيقة (100 mΩ) موضوعة قرب ترانزستور تغذية أحدث فرق حرارة (2°C) بين طرفيها، فقرأ مقياس الفولت (2.2 V) بدلاً من (2.0 V). إن التيار الخاطئ المحسوب ونسبة الخطأ هما:",
+        options: [
+            "التيار المحسوب 22 A، ونسبة الخطأ الناتجة عن الجهد الكهروحراري تساوي 10%",
+            "التيار المحسوب 20.2 A، ونسبة الخطأ الناتجة عن الجهد الكهروحراري تساوي 1%",
+            "التيار المحسوب 18 A، ونسبة الخطأ الناتجة عن الجهد الكهروحراري تساوي 10%",
+            "التيار المحسوب 24 A، ونسبة الخطأ الناتجة عن الجهد الكهروحراري تساوي 20%"
+        ],
+        ans: 0,
+        hint: "طبق قانون أوم I = V / R = 2.2 V / 0.1 Ω، ثم احسب نسبة الزيادة عن التيار الفعلي 20 A.",
+        exp: "بقانون أوم: I = 2.2 V / 0.1 Ω = 22 A، بينما التيار الحقيقي 20 A. هذا الفرق (2 A) يمثل خطأً قدره 10% سببه الجهد الكهروحراري الناتج عن حرارة الترانزستور."
+    },
+
+    // ==================== الدفعة التأسيسية من المحاضرة 3+4 والمحاضرة 5+6 (أسئلة المذاكرات الرسمية 15 سؤالاً) ====================
+    {
+        id: 56, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "سهل", isExam: true, examTag: "نموذج A - س4",
+        q: "يُعرف الوسيط (Median) لمجموعة من القياسات المسجلة لكمية فيزيائية ثابتة بأنه:",
+        options: [
+            "القيمة الوسطى لمجموعة القياسات بعد كتابتها وترتيبها ترتيباً تصاعدياً",
+            "حاصل جمع جميع قيم القياسات المسجلة مقسوماً على عددها الكلي",
+            "القيمة الوسطى لمجموعة قياسات مكتوبة بشكل عشوائي دون ترتيب",
+            "مجموع مربعات انحرافات القياسات عن المتوسط مقسوماً على عددها"
+        ],
+        ans: 0,
+        hint: "كيف نوجد الوسيط دون الحاجة إلى جمع القياسات؟ راجع الشريحة 10 في المحاضرة 3+4.",
+        exp: "الوسيط هو القيمة المتوسطة عند كتابة القياسات في مجموعة البيانات بترتيب تصاعدي من حيث القيمة، ويعطى بـ X_(n+1)/2."
+    },
+    {
+        id: 57, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "متوسط", isExam: true, examTag: "نموذج A - س5",
+        q: "تُستخدم دالة التوزيع التراكمي (Cumulative Distribution Function - c.d.f) بشكل خاص من أجل:",
+        options: [
+            "تقييم والتعبير عن الحد الأقصى للخطأ المحتمل في أي قياس واحد",
+            "التعبير عن كون المساحة الكلية الواقعة تحت منحني التكرار تساوي الواحد",
+            "حساب المساحة المحصورة تحت المنحني بين خطين عموديين موجبين فقط",
+            "إزالة الأخطاء المنهجية الناتجة عن تقادم الأجهزة وإعادة معايرتها"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 33 في المحاضرة (3+4) حول الهدف الخاص من دالة c.d.f.",
+        exp: "تُستخدم دالة التوزيع التراكمي (c.d.f) بشكل خاص لتقييم الحد الأقصى للخطأ المحتمل في أي قياس واحد، وتمثل المساحة يسار القيمة D0."
+    },
+    {
+        id: 58, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "سهل", isExam: true, examTag: "نموذج A,C,D - س6",
+        q: "تُعطى قيمة الخطأ المعياري للمتوسط (α) لمجموعة محدودة من القياسات عددها (n) وانحرافها المعياري (σ) بالعلاقة:",
+        options: [
+            "α = σ / √n",
+            "α = σ / n",
+            "α = σ / √(n²)",
+            "α = σ² / √n"
+        ],
+        ans: 0,
+        hint: "تذكر العلاقة التي تجعل الخطأ المعياري للمتوسط يميل للصفر ببطء مع جذر عدد القراءات.",
+        exp: "الخطأ المعياري للمتوسط يُحسب بالعلاقة α = σ / √n، وهو يمثل الخطأ بين متوسط عينة محدودة ومتوسط مجتمع لانهائي."
+    },
+    {
+        id: 59, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "سهل", isExam: true, examTag: "نموذج A - س7",
+        q: "إن المقصود بنقاط البيانات الشاذة أو الأخطاء الشاذة (Rogue Data Points) في عملية القياس هو:",
+        options: [
+            "قياسات يكون خطؤها كبيراً جداً وتحدث في أوقات عشوائية وغير متوقعة",
+            "قياسات لها خطأ صغير جداً وتتوزع بانتظام حول القيمة المتوسطة",
+            "قياسات خطؤها كبير ولكنها تحدث في أوقات محددة ومنتظمة دائماً",
+            "قياسات خطؤها صغير وتحدث في أوقات عشوائية نتيجة دقة المراقب"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 70 في المحاضرة (3+4) حول تعريف ومصادر نقاط البيانات الشاذة.",
+        exp: "نقاط البيانات الشاذة هي قياسات تحدث في أوقات عشوائية وغير متوقعة ويكون مقدار خطئها كبيراً جداً (مثل نبضة جهد عابرة أو خطأ تبديل أرقام)."
+    },
+    {
+        id: 60, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "سهل", isExam: true, examTag: "نموذج B - س4",
+        q: "تُعطى العلاقة الرياضية الصحيحة التي تربط بين الانحراف المعياري (σ) والتباين (V) لمجموعة قياسات بـ:",
+        options: [
+            "σ = √V (الجذر التربيعي للتباين)",
+            "σ = V² (مربع قيمة التباين)",
+            "σ = √(V / 2) (جذر نصف التباين)",
+            "σ = √(V²) (القيمة المطلقة للتباين)"
+        ],
+        ans: 0,
+        hint: "الانحراف المعياري يعيد الواحدة التربيعية للتباين إلى واحدة القياس الأصلية.",
+        exp: "الانحراف المعياري (σ) هو ببساطة الجذر التربيعي للتباين (V)، أي أن σ = √V."
+    },
+    {
+        id: 61, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "متوسط", isExam: true, examTag: "نموذج B - س5",
+        q: "عند رسم مدرج الانحرافات التكراري (Histogram) لمجموعة قياسات، فإن زيادة عدد القياسات المسجلة:",
+        options: [
+            "تساعد في تحديد حزم أصغر عرضاً بحيث يقترب المدرج من منحني سلس",
+            "تساعد في تحديد حزم أكبر عرضاً لتقليل عدد الأعمدة المرسومة",
+            "تسبب ظهور عدد قليل من الخطوات الواسعة وغير المتناظرة بيانياً",
+            "تؤدي إلى زيادة عرض الحزمة الواحدة وزيادة عدم اليقين في المتوسط"
+        ],
+        ans: 0,
+        hint: "ماذا يحدث لشكل المدرج التكراري كلما اقترب عدد القياسات من اللانهاية؟ راجع الشريحة 29.",
+        exp: "كلما ازداد عدد القياسات، أمكن تحديد حزم أصغر للمدرج التكراري، وعند اللانهاية يتحول إلى منحني التوزيع التكراري السلس."
+    },
+    {
+        id: 62, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "متوسط", isExam: true, examTag: "نموذج B - س6",
+        q: "لتقدير الخطأ العشوائي المحتمل في حالة أخذ (قياس واحد فقط)، يتم حساب أقصى انحراف محتمل عادةً ضمن حدود ثقة:",
+        options: [
+            "95% (والتي توافق حدود انحراف قدرها ±1.96σ)",
+            "95.4% (والتي توافق حدود انحراف قدرها ±2.00σ)",
+            "99.7% (والتي توافق حدود انحراف قدرها ±3.00σ)",
+            "68% (والتي توافق حدود انحراف قدرها ±1.00σ)"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 55 في المحاضرة (3+4) حول النهج العادي لتقدير الخطأ العشوائي في قياس واحد.",
+        exp: "النهج العادي لتقدير الخطأ في قياس واحد هو حساب الخطأ ضمن حد الثقة 95%، والذي يوافق انحرافاً قدره ±1.96σ."
+    },
+    {
+        id: 63, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "سهل", isExam: true, examTag: "نموذج B - س7",
+        q: "تتميز الأخطاء العشوائية (Random Errors) في أنظمة القياس بأنها أخطاء:",
+        options: [
+            "أسبابها غير معروفة ولا يمكن التنبؤ بها وتبقى موجودة حتى بعد إزالة الأخطاء المنهجية",
+            "أسبابها معروفة بدقة ولكن لا يمكن التنبؤ بوقت حدوثها أثناء التجربة",
+            "أسبابها غير معروفة ولكن يمكن التنبؤ بقيمتها وإشارتها مسبقاً قبل القياس",
+            "يمكن التخلص منها نهائياً وبشكل كامل بمجرد التخلص من الأخطاء المنهجية"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 6 في المحاضرة (3+4) حول تعريف الأخطاء العشوائية.",
+        exp: "الأخطاء العشوائية لا يمكن التنبؤ بها ولا تُعرف أسبابها، وتظل موجودة دائماً حتى بعد التخلص من كل الأخطاء المنهجية."
+    },
+    {
+        id: 64, lec: "lec34", lecName: "المحاضرة 3 و 4", diff: "متوسط", isExam: true, examTag: "نموذج C&D - س4,5,7",
+        q: "عند حدود انحراف أخطاء عشوائية قدرها (±2σ) في توزيع غاوس، فإن نسبة نقاط البيانات (داخل الحدود) واحتمال وقوع نقطة (خارج الحدود) هما:",
+        options: [
+            "نسبة الوقوع داخل الحدود 95.4%، واحتمال الوقوع خارج الحدود 4.6%",
+            "نسبة الوقوع داخل الحدود 68.0%، واحتمال الوقوع خارج الحدود 32.0%",
+            "نسبة الوقوع داخل الحدود 99.7%، واحتمال الوقوع خارج الحدود 0.3%",
+            "نسبة الوقوع داخل الحدود 95.0%، واحتمال الوقوع خارج الحدود 5.0%"
+        ],
+        ans: 0,
+        hint: "احفظ جدول حدود الانحراف الهام في الشريحة 50: (±σ: 68%/32%)، (±1.96σ: 95%/5%)، (±2σ: 95.4%/4.6%)، (±3σ: 99.7%/0.3%).",
+        exp: "وفق جدول التوزيع الغاوسي: عند حدود ±2σ تقع 95.4% من نقاط البيانات داخل الحدود (س7 نموذج D)، و4.6% خارج الحدود (س7 نموذج C)."
+    },
+    {
+        id: 65, lec: "lec56", lecName: "المحاضرة 5 و 6", diff: "سهل", isExam: true, examTag: "نموذج A - س8,9",
+        q: "لتقليل الأخطاء الناتجة عن كابلات التوصيل وللسيطرة على المدخلات البيئية، يجب على الترتيب:",
+        options: [
+            "اختيار كابلات ذات مقطع عرضي يخفض مقاومتها، واعتماد التصميم الدقيق للجهاز كأفضل طريقة",
+            "اختيار كابلات ذات مقطع عرضي يزيد مقاومتها، والاعتماد على الصدفة في إلغاء الحرارة",
+            "استخدام أسلاك ذات معامل حراري مرتفع جداً، وتجنب معايرة الجهاز طوال فترة خدمته",
+            "تمديد الكابلات بمسار عشوائي قرب خطوط التغذية، وزيادة حساسية الجهاز للبيئة"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 8 والشريحة 25 في المحاضرة (5+6) (س8 وس9 في نموذج A).",
+        exp: "يجب أن تمتلك كابلات التوصيل مقطعاً عرضياً مناسباً يخفض من مقاومتها، ويُعد التصميم الدقيق للجهاز الطريقة الأكثر فائدة للسيطرة على المدخلات البيئية."
+    },
+    {
+        id: 66, lec: "lec56", lecName: "المحاضرة 5 و 6", diff: "سهل", isExam: true, examTag: "نموذج A - س10",
+        q: "إذا تأثر قياس ما بأخطاء منهجية (±x) وأخطاء عشوائية (±y) معاً، فإن أفضل تعبير إحصائي عن الحد الأقصى للخطأ المشترك المحتمل (e) هو:",
+        options: [
+            "e = √(x² + y²)",
+            "e = x + y",
+            "e = x² + y²",
+            "e = √(x + y)"
+        ],
+        ans: 0,
+        hint: "لأن الأخطاء المنهجية والعشوائية مستقلة، فمن غير المحتمل أن تبلغا القيمة القصوى بنفس اللحظة.",
+        exp: "أفضل تعبير إحصائي للخطأ المشترك هو الجذر التربيعي لمجموع المربعين e = √(x² + y²)."
+    },
+    {
+        id: 67, lec: "lec56", lecName: "المحاضرة 5 و 6", diff: "سهل", isExam: true, examTag: "نموذج A,B,C,D - س11",
+        q: "ينتج كل من (الانزياح الصفري - Zero Drift) و(انزياح الحساسية - Sensitivity Drift) في أنظمة القياس بسبب:",
+        options: [
+            "أخطاء ناتجة عن مدخلات بيئية (كالتغير في درجة الحرارة والضغط المحيط)",
+            "أخطاء بشرية ناتجة عن قراءة المؤشر بزاوية مائلة (عدم التطابق)",
+            "أخطاء عشوائية بحتة تتبع توزيع غاوس ولا تعرف أسبابها الفيزيائية",
+            "مقاومة كابلات التوصيل النحاسية المعزولة عن المجالات المغناطيسية"
+        ],
+        ans: 0,
+        hint: "هذا السؤال تكرر في جميع نماذج المذاكرة الأربعة! راجع الشريحة 11 في المحاضرة (5+6).",
+        exp: "يتم تقدير حجم الاختلاف الناجم عن المدخلات البيئية (الأخطاء البيئية) عن طريق ثابتين هما انزياح الحساسية والانزياح الصفري."
+    },
+    {
+        id: 68, lec: "lec56", lecName: "المحاضرة 5 و 6", diff: "سهل", isExam: true, examTag: "نموذج B - س8,9,10",
+        q: "فيما يخص أخطاء الأجهزة وضجيج القياسات: تقسم أخطاء الأجهزة إلى (...........)، ويُعد ضجيج الطلقة من (...........)، وتقوم الأجهزة الذكية بـ (...........):",
+        options: [
+            "أخطاء تشوه واحتكاك | ضجيج القياسات الكهربائية | تعويض قيمة قراءة الخرج تلقائياً",
+            "أخطاء منهجية وعشوائية | ضجيج المدخلات البيئية | تعويض قيمة قراءة الدخل تلقائياً",
+            "أخطاء بيئية وكابلات | ضجيج كابلات التوصيل | زيادة حساسية النظام للحرارة",
+            "ضجيج كهربائي وميكانيكي | أخطاء بشرية عشوائية | إلغاء الحاجة للحساس الأولي"
+        ],
+        ans: 0,
+        hint: "هذا السؤال يجمع الأسئلة 8 و9 و10 من نموذج المذاكرة B ونموذج د. ليلى.",
+        exp: "تقسم أخطاء الأجهزة إلى (تشوه واحتكاك)، ويعتبر ضجيج الطلقة (Shot noise) من ضجيج القياسات الكهربائية في أنصاف النواقل، والأجهزة الذكية تعوض تلقائياً قراءة الخرج."
+    },
+    {
+        id: 69, lec: "lec56", lecName: "المحاضرة 5 و 6", diff: "سهل", isExam: true, examTag: "نموذج C - س8,9",
+        q: "إن اضطراب النظام بسبب عملية القياس (كإدخال ترمومتر بارد في ماء ساخن أو وضع لوحة تدفق) يُعد (...........)، بينما تُصنف أخطاء التشوه كجزء فرعي من (...........):",
+        options: [
+            "مصدراً شائعاً للأخطاء المنهجية | أخطاء الأجهزة (وليس مصدراً رئيسياً مستقلاً عنها)",
+            "مصدراً شائعاً للأخطاء العشوائية | الأخطاء الناتجة عن المدخلات البيئية المعدلة",
+            "مصدراً شائعاً للأخطاء البشرية | الأخطاء الناتجة عن مقاومة كابلات التوصيل",
+            "مصدراً للضجيج الكهروكيميائي | الأخطاء الشاذة التي تخضع لقاعدة ثلاث سيجما"
+        ],
+        ans: 0,
+        hint: "راجع السؤالين 8 و9 في نموذج المذاكرة C حول المصادر الأربعة للأخطاء المنهجية.",
+        exp: "المصادر الأربعة للأخطاء المنهجية هي: 1) أخطاء الأجهزة (وتشمل الاحتكاك والتشوه)، 2) كابلات التوصيل، 3) المدخلات البيئية، 4) اضطراب النظام بسبب عملية القياس."
+    },
+    {
+        id: 70, lec: "lec56", lecName: "المحاضرة 5 و 6", diff: "سهل", isExam: true, examTag: "نموذج D - س8,9",
+        q: "تتصف الأخطاء المنهجية (Systematic Errors) بأنها تكون دائماً (...........)، وتُسمى المدخلات البيئية بالمدخلات المعدلة لنظام القياس لأنها (...........):",
+        options: [
+            "على جانب واحد من القراءة الصحيحة (إما موجبة أو سالبة) | تعدل خرج النظام",
+            "متناظرة حول الصفر (نصفها موجب ونصفها سالب) | تعدل دخل النظام فقط",
+            "متغيرة الإشارة عشوائياً في كل قراءة متتالية | تلغي عمل الحساس الأولي",
+            "قابلة للإلغاء بأخذ المتوسط الحسابي للقراءات | تعدل القيمة الحقيقية للعملية"
+        ],
+        ans: 0,
+        hint: "راجع الشريحة 2 والشريحة 9 في المحاضرة (5+6) (السؤالان 8 و9 في نموذج D).",
+        exp: "الأخطاء المنهجية تكون دائماً على جانب واحد من القراءة الصحيحة، وتسمى التأثيرات البيئية بالمدخلات المعدلة لأنها تعدل خرج نظام القياس."
+    }
+];
+
+// متغيرات حالة المنصة
+let displayedQuestions = [];
+let userAnswers = {}; // { qId: selectedOptionIndex }
+let customExamQuestions = [];
+let customAnswers = {};
+
+// تهيئة المنصة عند التحميل
+window.onload = function() {
+    applyFilters();
+    renderMasterTable();
+    renderExamHistory();
+};
+
+// التنقل بين الأقسام الستة
+function switchTab(secId, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(secId).classList.add('active');
+    btn.classList.add('active');
+
+    if (secId === 'print-sec') renderPrintView();
+    if (secId === 'key-sec') renderAnswerKeys();
+    if (secId === 'table-sec') renderMasterTable();
+}
+
+// تطبيق الفلاتر على بنك الأسئلة
+function applyFilters() {
+    const lec = document.getElementById('filter-lecture').value;
+    const diff = document.getElementById('filter-diff').value;
+    const src = document.getElementById('filter-source').value;
+
+    displayedQuestions = rawQuestions.filter(q => {
+        const matchLec = (lec === 'all') || (q.lec === lec);
+        const matchDiff = (diff === 'all') || (q.diff === diff);
+        const matchSrc = (src === 'all') || (src === 'exam' && q.isExam) || (src === 'regular' && !q.isExam);
+        return matchLec && matchDiff && matchSrc;
+    });
+
+    renderQuiz();
+    updateStats();
+}
+
+// ميزة تغيير مواقع الخيارات عشوائياً (Shuffle Options) بحيث تتوزع الإجابات ولا تكون كلها أ أو ب
+function shuffleAllOptions() {
+    rawQuestions.forEach(q => {
+        const correctText = q.options[q.ans];
+        // خوارزمية Fisher-Yates لبعثرة الخيارات
+        for (let i = q.options.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
+        }
+        q.ans = q.options.indexOf(correctText);
+    });
+    userAnswers = {};
+    customAnswers = {};
+    applyFilters();
+    if (customExamQuestions.length > 0) renderCustomExam();
+    alert("✅ تم تغيير مواقع الخيارات (أ، ب، ج، د) وتوزيعها عشوائياً بنجاح لجميع الأسئلة مع تحديث مفتاح الإجابات تلقائياً!");
+}
+
+// عرض بطاقات الأسئلة في الاختبار التفاعلي
+function renderQuiz() {
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = '';
+
+    displayedQuestions.forEach((q, idx) => {
+        const diffClass = q.diff === 'سهل' ? 'badge-easy' : (q.diff === 'متوسط' ? 'badge-medium' : 'badge-hard');
+        const examBadge = q.isExam ? `<span class="badge badge-exam">⭐ سؤال مذاكرة (${q.examTag})</span>` : '';
+        const userAns = userAnswers[q.id];
+        const isAnswered = userAns !== undefined;
+
+        let optionsHtml = '';
+        q.options.forEach((opt, oIdx) => {
+            let btnClass = 'option-btn';
+            if (isAnswered) {
+                if (oIdx === q.ans) btnClass += ' correct';
+                else if (oIdx === userAns && userAns !== q.ans) btnClass += ' wrong';
+            }
+            optionsHtml += `
+                <button class="${btnClass}" ${isAnswered ? 'disabled' : ''} onclick="selectAnswer(${q.id}, ${oIdx})">
+                    <strong>(${arabicLetters[oIdx]})</strong>
+                    <span>${opt}</span>
+                </button>
+            `;
+        });
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+            <div class="q-header">
+                <div class="q-badges">
+                    <span class="badge badge-lec">${q.lecName}</span>
+                    <span class="badge ${diffClass}">${q.diff}</span>
+                    ${examBadge}
+                </div>
+                <button class="bulb-btn" title="اضغط لإضاءة التلميح" onclick="toggleHint(this, 'hint-${q.id}')">💡</button>
+            </div>
+            <div id="hint-${q.id}" class="hint-box">
+                <strong>💡 تلميح ذكي:</strong> ${q.hint}
+            </div>
+            <div class="q-title">س${idx + 1}: ${q.q}</div>
+            <div class="options-list">${optionsHtml}</div>
+            <div class="explanation-box ${isAnswered ? 'show' : ''}">
+                <strong>✅ الإجابة الصحيحة: (${arabicLetters[q.ans]})</strong><br>
+                <strong>📌 السبب والتعليل الهندسي:</strong> ${q.exp}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// إضاءة اللمبة وإظهار التلميح
+function toggleHint(btn, hintId) {
+    btn.classList.toggle('lit');
+    document.getElementById(hintId).classList.toggle('show');
+}
+
+// اختيار إجابة في الاختبار العام
+function selectAnswer(qId, optIdx) {
+    userAnswers[qId] = optIdx;
+    renderQuiz();
+    updateStats();
+}
+
+// تحديث شريط الإحصائيات والنتيجة
+function updateStats() {
+    const total = displayedQuestions.length;
+    let answered = 0;
+    let correct = 0;
+
+    displayedQuestions.forEach(q => {
+        if (userAnswers[q.id] !== undefined) {
+            answered++;
+            if (userAnswers[q.id] === q.ans) correct++;
+        }
+    });
+
+    const pct = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+    document.getElementById('stat-count').textContent = `عدد الأسئلة المعروضة: ${total} سؤالاً`;
+    document.getElementById('stat-score').textContent = `النتيجة الحالية: ${correct} صحيحة من أصل ${answered} مجاب عنها (${pct}%)`;
+}
+
+function resetCurrentQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateStats();
+}
+
+// ==================== 2. مولد النماذج الامتحانية المخصصة ====================
+function generateCustomExam() {
+    const count = parseInt(document.getElementById('custom-count').value) || 15;
+    const diff = document.getElementById('custom-diff').value;
+    const examFilter = document.getElementById('custom-exam-only').value;
+    const checkedLecs = Array.from(document.querySelectorAll('.custom-lec-cb:checked')).map(cb => cb.value);
+
+    if (checkedLecs.length === 0) {
+        alert("⚠️ يرجى اختيار ملف محاضرة واحد على الأقل لتوليد الامتحان!");
+        return;
+    }
+
+    let pool = rawQuestions.filter(q => {
+        const mLec = checkedLecs.includes(q.lec);
+        const mDiff = (diff === 'all') || (q.diff === diff);
+        const mExam = (examFilter === 'all') || (examFilter === 'exam' && q.isExam);
+        return mLec && mDiff && mExam;
+    });
+
+    // بعثرة بنك الأسئلة المختار
+    pool = [...pool].sort(() => Math.random() - 0.5);
+    customExamQuestions = pool.slice(0, Math.min(count, pool.length));
+    customAnswers = {};
+
+    document.getElementById('custom-stats-bar').style.display = 'flex';
+    renderCustomExam();
+}
+
+function renderCustomExam() {
+    const container = document.getElementById('custom-exam-container');
+    container.innerHTML = '';
+
+    let correct = 0, answered = 0;
+    customExamQuestions.forEach(q => {
+        if (customAnswers[q.id] !== undefined) {
+            answered++;
+            if (customAnswers[q.id] === q.ans) correct++;
+        }
+    });
+
+    document.getElementById('custom-stat-info').textContent = `عدد أسئلة النموذج المولد: ${customExamQuestions.length} سؤالاً`;
+    document.getElementById('custom-stat-score').textContent = `النتيجة: ${correct} / ${customExamQuestions.length} (المجاب: ${answered})`;
+
+    customExamQuestions.forEach((q, idx) => {
+        const userAns = customAnswers[q.id];
+        const isAnswered = userAns !== undefined;
+        let optionsHtml = '';
+
+        q.options.forEach((opt, oIdx) => {
+            let btnClass = 'option-btn';
+            if (isAnswered) {
+                if (oIdx === q.ans) btnClass += ' correct';
+                else if (oIdx === userAns && userAns !== q.ans) btnClass += ' wrong';
+            }
+            optionsHtml += `
+                <button class="${btnClass}" ${isAnswered ? 'disabled' : ''} onclick="selectCustomAnswer(${q.id}, ${oIdx})">
+                    <strong>(${arabicLetters[oIdx]})</strong>
+                    <span>${opt}</span>
+                </button>
+            `;
+        });
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+            <div class="q-header">
+                <div class="q-badges">
+                    <span class="badge badge-lec">${q.lecName}</span>
+                    <span class="badge badge-medium">${q.diff}</span>
+                    ${q.isExam ? `<span class="badge badge-exam">⭐ ${q.examTag}</span>` : ''}
+                </div>
+                <button class="bulb-btn" onclick="toggleHint(this, 'chint-${q.id}')">💡</button>
+            </div>
+            <div id="chint-${q.id}" class="hint-box"><strong>💡 تلميح:</strong> ${q.hint}</div>
+            <div class="q-title">س${idx + 1}: ${q.q}</div>
+            <div class="options-list">${optionsHtml}</div>
+            <div class="explanation-box ${isAnswered ? 'show' : ''}">
+                <strong>✅ الإجابة الصحيحة: (${arabicLetters[q.ans]})</strong> | ${q.exp}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function selectCustomAnswer(qId, optIdx) {
+    customAnswers[qId] = optIdx;
+    renderCustomExam();
+}
+
+// ==================== 3. الجدول الشامل ====================
+function renderMasterTable() {
+    const tbody = document.getElementById('master-table-body');
+    const query = (document.getElementById('table-search').value || '').trim().toLowerCase();
+    tbody.innerHTML = '';
+
+    rawQuestions.forEach((q, idx) => {
+        const fullText = `${q.q} ${q.lecName} ${q.options[q.ans]} ${q.exp} ${q.examTag}`.toLowerCase();
+        if (query && !fullText.includes(query)) return;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${idx + 1}</strong></td>
+            <td>${q.lecName} ${q.isExam ? `<br><span class="badge badge-exam">⭐ ${q.examTag}</span>` : ''}</td>
+            <td>${q.diff}</td>
+            <td><strong>${q.q}</strong></td>
+            <td style="color:#065f46; font-weight:600;">(${arabicLetters[q.ans]}) ${q.options[q.ans]}</td>
+            <td style="color:#92400e; font-size:0.85rem;">${q.hint}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ==================== 4. نسخة الطباعة ====================
+function renderPrintView() {
+    const container = document.getElementById('print-questions-container');
+    const list = customExamQuestions.length > 0 ? customExamQuestions : displayedQuestions;
+    container.innerHTML = '';
+
+    list.forEach((q, idx) => {
+        const div = document.createElement('div');
+        div.className = 'question-card';
+        div.innerHTML = `
+            <div class="q-title">س${idx + 1}: ${q.q} ${q.isExam ? `[⭐ ${q.examTag}]` : ''}</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; font-size:0.92rem;">
+                <div>(أ) ${q.options[0]}</div>
+                <div>(ب) ${q.options[1]}</div>
+                <div>(ج) ${q.options[2]}</div>
+                <div>(د) ${q.options[3]}</div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ==================== 5. مفتاح الإجابات والتعليل ====================
+function renderAnswerKeys() {
+    const quickGrid = document.getElementById('quick-key-grid');
+    const detailedContainer = document.getElementById('detailed-keys-container');
+    quickGrid.innerHTML = '';
+    detailedContainer.innerHTML = '';
+
+    displayedQuestions.forEach((q, idx) => {
+        const keyBadge = document.createElement('div');
+        keyBadge.style.cssText = 'background:#f1f5f9; padding:0.5rem; border-radius:6px; text-align:center; font-weight:bold; border:1px solid #cbd5e1;';
+        keyBadge.innerHTML = `س${idx + 1}: <span style="color:var(--primary)">(${arabicLetters[q.ans]})</span>`;
+        quickGrid.appendChild(keyBadge);
+
+        const row = document.createElement('div');
+        row.style.cssText = 'padding:0.75rem 0; border-bottom:1px solid #e2e8f0; font-size:0.95rem;';
+        row.innerHTML = `
+            <strong>س${idx + 1} [${q.lecName}${q.isExam ? ' - ⭐ ' + q.examTag : ''}]:</strong>
+            الإجابة الصحيحة هي <strong style="color:var(--success)">(${arabicLetters[q.ans]}) ${q.options[q.ans]}</strong>
+            <br><span style="color:#475569;">🔹 <em>السبب والتعليل:</em> ${q.exp}</span>
+        `;
+        detailedContainer.appendChild(row);
+    });
+}
+
+// ==================== 6. سجل نتائج الامتحانات ====================
+function saveExamResult(modeName) {
+    const total = displayedQuestions.length;
+    let correct = 0;
+    displayedQuestions.forEach(q => {
+        if (userAnswers[q.id] === q.ans) correct++;
+    });
+    recordResultToStorage(modeName, correct, total);
+}
+
+function saveCustomExamResult() {
+    if (customExamQuestions.length === 0) {
+        alert("يرجى توليد نموذج امتحاني أولاً!");
+        return;
+    }
+    let correct = 0;
+    customExamQuestions.forEach(q => {
+        if (customAnswers[q.id] === q.ans) correct++;
+    });
+    recordResultToStorage("نموذج امتحاني مخصص", correct, customExamQuestions.length);
+}
+
+function recordResultToStorage(title, score, total) {
+    const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+    const grade = pct >= 90 ? "ممتاز (شرف)" : (pct >= 80 ? "جيد جداً" : (pct >= 70 ? "جيد" : (pct >= 60 ? "مقبول" : "يحتاج مراجعة")));
+    const history = JSON.parse(localStorage.getItem('tariq_metrology_exams') || '[]');
+    history.unshift({
+        date: new Date().toLocaleString('ar-SY'),
+        title,
+        score: `${score} / ${total}`,
+        pct: `${pct}%`,
+        grade
+    });
+    localStorage.setItem('tariq_metrology_exams', JSON.stringify(history));
+    renderExamHistory();
+    alert(`🎉 تم حفظ نتيجتك (${score} من ${total} - ${pct}%) في سجل الامتحانات بنجاح!`);
+}
+
+function renderExamHistory() {
+    const tbody = document.getElementById('history-table-body');
+    const history = JSON.parse(localStorage.getItem('tariq_metrology_exams') || '[]');
+    tbody.innerHTML = '';
+
+    if (history.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#64748b;">لا توجد نتائج محفوظة بعد. قم بإجراء اختبار واضغط على "حفظ النتيجة".</td></tr>`;
+        return;
+    }
+
+    history.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${item.date}</td>
+            <td><strong>${item.title}</strong></td>
+            <td>${item.score}</td>
+            <td><strong>${item.pct}</strong></td>
+            <td><span class="badge badge-easy">${item.grade}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function clearExamHistory() {
+    if (confirm("هل أنت متأكد من مسح سجل نتائج الامتحانات بالكامل؟")) {
+        localStorage.removeItem('tariq_metrology_exams');
+        renderExamHistory();
+    }
+}
+</script>
+</body>
+</html>
